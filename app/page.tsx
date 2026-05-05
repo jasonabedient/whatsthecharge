@@ -975,7 +975,7 @@ export default function VoltChargePage() {
           fontSize: "0.875rem",
         }}
       >
-        <p>&copy; 2024 Volt/Charge. Engineered for efficiency.</p>
+        <p>&copy; 2026 Bedo.Studio</p>
       </footer>
     </div>
   )
