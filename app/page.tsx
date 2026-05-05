@@ -13,55 +13,503 @@ import { Label } from "@/components/ui/label"
 // EV Battery Data
 const evData: Record<string, Record<string, Record<string, number>>> = {
   "2024": {
-    "Rivian R1S": {
-      "Large AWD": 135,
-      "Max AWD": 149,
-      "Dual Motor AWD": 135,
-    },
+    // Tesla
     "Tesla Model 3": {
-      "Long Range AWD": 78.4,
-      "Performance AWD": 78.4,
+      "Standard Range RWD": 60,
+      "Long Range AWD": 82,
+      "Performance AWD": 82,
     },
     "Tesla Model Y": {
-      "Long Range AWD": 78.4,
-      "Performance AWD": 78.4,
+      "Standard Range RWD": 60,
+      "Long Range AWD": 82,
+      "Performance AWD": 82,
     },
-    "Hyundai Ioniq 6": {
-      "SE Long Range RWD": 77.4,
-      "SEL Long Range RWD": 77.4,
-      "SEL Long Range AWD": 77.4,
+    "Tesla Model S": {
+      "Long Range AWD": 100,
+      "Plaid AWD": 100,
     },
+    "Tesla Model X": {
+      "Long Range AWD": 100,
+      "Plaid AWD": 100,
+    },
+    "Tesla Cybertruck": {
+      "Dual Motor AWD": 123,
+      "Tri Motor AWD": 123,
+    },
+    // Rivian
+    "Rivian R1S": {
+      "Standard AWD": 105,
+      "Large AWD": 135,
+      "Max AWD": 149,
+    },
+    "Rivian R1T": {
+      "Standard AWD": 105,
+      "Large AWD": 135,
+      "Max AWD": 149,
+    },
+    // Ford
     "Ford Mustang Mach-E": {
-      "Select RWD": 75.7,
+      "Select RWD": 72,
+      "Premium RWD": 91,
       "Premium AWD": 91,
       "GT AWD": 91,
+    },
+    "Ford F-150 Lightning": {
+      "Standard Range": 98,
+      "Extended Range": 131,
+    },
+    // Hyundai
+    "Hyundai Ioniq 5": {
+      "SE Standard Range RWD": 58,
+      "SE Long Range RWD": 77.4,
+      "SEL Long Range AWD": 77.4,
+      "Limited Long Range AWD": 77.4,
+    },
+    "Hyundai Ioniq 6": {
+      "SE Standard Range RWD": 53,
+      "SE Long Range RWD": 77.4,
+      "SEL Long Range AWD": 77.4,
+      "Limited Long Range AWD": 77.4,
+    },
+    "Hyundai Kona Electric": {
+      "SE RWD": 64.8,
+      "SEL RWD": 64.8,
+      "Limited RWD": 64.8,
+    },
+    // Kia
+    "Kia EV6": {
+      "Light RWD": 58,
+      "Wind RWD": 77.4,
+      "Wind AWD": 77.4,
+      "GT-Line AWD": 77.4,
+      "GT AWD": 77.4,
+    },
+    "Kia EV9": {
+      "Light RWD": 76.1,
+      "Wind AWD": 99.8,
+      "GT-Line AWD": 99.8,
+    },
+    "Kia Niro EV": {
+      "Wind RWD": 64.8,
+      "Wave RWD": 64.8,
+    },
+    // BMW
+    "BMW i4": {
+      "eDrive35": 66,
+      "eDrive40": 83.9,
+      "M50 xDrive": 83.9,
     },
     "BMW iX": {
       "xDrive50": 111.5,
       "M60 xDrive": 111.5,
     },
+    // Mercedes
+    "Mercedes EQS": {
+      "450+ RWD": 108.4,
+      "580 4MATIC": 108.4,
+    },
+    "Mercedes EQE": {
+      "350+ RWD": 90.6,
+      "500 4MATIC": 90.6,
+      "AMG 53 4MATIC": 90.6,
+    },
+    // Chevrolet
     "Chevrolet Blazer EV": {
-      "LT AWD": 102,
+      "LT RWD": 85,
+      "RS RWD": 102,
       "RS AWD": 102,
       "SS AWD": 102,
     },
+    "Chevrolet Equinox EV": {
+      "1LT RWD": 85,
+      "2LT RWD": 85,
+      "2RS RWD": 85,
+      "3RS AWD": 85,
+    },
+    "Chevrolet Bolt EUV": {
+      "1LT FWD": 65,
+      "Premier FWD": 65,
+    },
+    "Chevrolet Bolt EV": {
+      "1LT FWD": 65,
+      "2LT FWD": 65,
+    },
+    // Volkswagen
     "Volkswagen ID.4": {
-      "Pro RWD": 77,
-      "Pro S RWD": 77,
-      "Pro S AWD": 77,
+      "Standard RWD": 62,
+      "Pro RWD": 82,
+      "Pro S RWD": 82,
+      "Pro S Plus AWD": 82,
+    },
+    "Volkswagen ID.Buzz": {
+      "Pro S RWD": 91,
+      "Pro S Plus RWD": 91,
+    },
+    // Polestar
+    "Polestar 2": {
+      "Long Range Single Motor": 82,
+      "Long Range Dual Motor": 82,
+    },
+    "Polestar 3": {
+      "Long Range Dual Motor": 111,
+      "Performance Pack": 111,
+    },
+    "Polestar 4": {
+      "Long Range Single Motor": 102,
+      "Long Range Dual Motor": 102,
+    },
+    // Audi
+    "Audi e-tron GT": {
+      "Premium Plus": 93.4,
+      "Prestige": 93.4,
+      "RS": 93.4,
+    },
+    "Audi Q4 e-tron": {
+      "40 Premium RWD": 77,
+      "50 Premium Plus AWD": 77,
+      "55 Prestige AWD": 77,
+    },
+    "Audi Q8 e-tron": {
+      "Premium Plus": 106,
+      "Prestige": 106,
+      "SQ8 e-tron": 106,
+    },
+    // Lucid
+    "Lucid Air": {
+      "Pure RWD": 88,
+      "Touring AWD": 112,
+      "Grand Touring AWD": 112,
+    },
+    // Volvo
+    "Volvo EX90": {
+      "Plus Twin Motor": 111,
+      "Ultra Twin Motor": 111,
+    },
+    "Volvo EX30": {
+      "Single Motor": 51,
+      "Twin Motor": 69,
+    },
+    "Volvo C40 Recharge": {
+      "Core Single Motor": 69,
+      "Plus Twin Motor": 78,
+      "Ultimate Twin Motor": 78,
+    },
+    "Volvo XC40 Recharge": {
+      "Core Single Motor": 69,
+      "Plus Twin Motor": 78,
+      "Ultimate Twin Motor": 78,
+    },
+    // Genesis
+    "Genesis GV60": {
+      "Advanced RWD": 77.4,
+      "Performance AWD": 77.4,
+    },
+    "Genesis Electrified GV70": {
+      "Advanced AWD": 77.4,
+      "Prestige AWD": 77.4,
+    },
+    // Cadillac
+    "Cadillac Lyriq": {
+      "Tech RWD": 102,
+      "Luxury RWD": 102,
+      "Sport AWD": 102,
+    },
+    // Porsche
+    "Porsche Taycan": {
+      "RWD": 79.2,
+      "4S AWD": 93.4,
+      "Turbo AWD": 93.4,
+      "Turbo S AWD": 93.4,
     },
   },
   "2023": {
+    // Tesla
+    "Tesla Model 3": {
+      "Standard Range+ RWD": 60,
+      "Long Range AWD": 82,
+      "Performance AWD": 82,
+    },
+    "Tesla Model Y": {
+      "Long Range AWD": 82,
+      "Performance AWD": 82,
+    },
+    "Tesla Model S": {
+      "Long Range AWD": 100,
+      "Plaid AWD": 100,
+    },
+    "Tesla Model X": {
+      "Long Range AWD": 100,
+      "Plaid AWD": 100,
+    },
+    // Rivian
     "Rivian R1S": {
       "Large AWD": 135,
+      "Max AWD": 149,
     },
-    "Tesla Model 3": {
-      "Long Range AWD": 75,
-      "Performance AWD": 75,
+    "Rivian R1T": {
+      "Large AWD": 135,
+      "Max AWD": 149,
+    },
+    // Ford
+    "Ford Mustang Mach-E": {
+      "Select RWD": 72,
+      "Premium RWD": 91,
+      "Premium AWD": 91,
+      "GT AWD": 91,
+    },
+    "Ford F-150 Lightning": {
+      "Standard Range": 98,
+      "Extended Range": 131,
+    },
+    // Hyundai
+    "Hyundai Ioniq 5": {
+      "SE Standard Range RWD": 58,
+      "SE Long Range RWD": 77.4,
+      "SEL Long Range AWD": 77.4,
+      "Limited Long Range AWD": 77.4,
     },
     "Hyundai Ioniq 6": {
       "SE Long Range RWD": 77.4,
-      "SEL Long Range RWD": 77.4,
+      "SEL Long Range AWD": 77.4,
+      "Limited Long Range AWD": 77.4,
+    },
+    "Hyundai Kona Electric": {
+      "SEL RWD": 64,
+      "Limited RWD": 64,
+    },
+    // Kia
+    "Kia EV6": {
+      "Light RWD": 58,
+      "Wind RWD": 77.4,
+      "Wind AWD": 77.4,
+      "GT-Line AWD": 77.4,
+      "GT AWD": 77.4,
+    },
+    "Kia Niro EV": {
+      "Wind RWD": 64.8,
+      "Wave RWD": 64.8,
+    },
+    // BMW
+    "BMW i4": {
+      "eDrive35": 66,
+      "eDrive40": 83.9,
+      "M50 xDrive": 83.9,
+    },
+    "BMW iX": {
+      "xDrive50": 111.5,
+      "M60 xDrive": 111.5,
+    },
+    // Mercedes
+    "Mercedes EQS": {
+      "450+ RWD": 108.4,
+      "580 4MATIC": 108.4,
+    },
+    "Mercedes EQE": {
+      "350+ RWD": 90.6,
+      "500 4MATIC": 90.6,
+    },
+    // Chevrolet
+    "Chevrolet Bolt EUV": {
+      "1LT FWD": 65,
+      "Premier FWD": 65,
+    },
+    "Chevrolet Bolt EV": {
+      "1LT FWD": 65,
+      "2LT FWD": 65,
+    },
+    // Volkswagen
+    "Volkswagen ID.4": {
+      "Standard RWD": 62,
+      "Pro RWD": 82,
+      "Pro S RWD": 82,
+      "Pro S Plus AWD": 82,
+    },
+    // Polestar
+    "Polestar 2": {
+      "Single Motor": 78,
+      "Long Range Single Motor": 82,
+      "Long Range Dual Motor": 82,
+    },
+    // Audi
+    "Audi e-tron GT": {
+      "Premium Plus": 93.4,
+      "Prestige": 93.4,
+      "RS": 93.4,
+    },
+    "Audi Q4 e-tron": {
+      "40 Premium RWD": 77,
+      "50 Premium Plus AWD": 77,
+    },
+    "Audi Q8 e-tron": {
+      "Premium Plus": 106,
+      "Prestige": 106,
+    },
+    // Lucid
+    "Lucid Air": {
+      "Pure RWD": 88,
+      "Touring AWD": 112,
+      "Grand Touring AWD": 112,
+    },
+    // Volvo
+    "Volvo C40 Recharge": {
+      "Core Single Motor": 69,
+      "Plus Twin Motor": 78,
+      "Ultimate Twin Motor": 78,
+    },
+    "Volvo XC40 Recharge": {
+      "Core Single Motor": 69,
+      "Plus Twin Motor": 78,
+      "Ultimate Twin Motor": 78,
+    },
+    // Genesis
+    "Genesis GV60": {
+      "Advanced RWD": 77.4,
+      "Performance AWD": 77.4,
+    },
+    "Genesis Electrified GV70": {
+      "Advanced AWD": 77.4,
+      "Prestige AWD": 77.4,
+    },
+    // Cadillac
+    "Cadillac Lyriq": {
+      "Tech RWD": 102,
+      "Luxury RWD": 102,
+    },
+    // Porsche
+    "Porsche Taycan": {
+      "RWD": 79.2,
+      "4S AWD": 93.4,
+      "Turbo AWD": 93.4,
+      "Turbo S AWD": 93.4,
+    },
+  },
+  "2022": {
+    // Tesla
+    "Tesla Model 3": {
+      "Standard Range+ RWD": 60,
+      "Long Range AWD": 82,
+      "Performance AWD": 82,
+    },
+    "Tesla Model Y": {
+      "Long Range AWD": 82,
+      "Performance AWD": 82,
+    },
+    "Tesla Model S": {
+      "Long Range AWD": 100,
+      "Plaid AWD": 100,
+    },
+    "Tesla Model X": {
+      "Long Range AWD": 100,
+      "Plaid AWD": 100,
+    },
+    // Rivian
+    "Rivian R1S": {
+      "Large AWD": 135,
+    },
+    "Rivian R1T": {
+      "Large AWD": 135,
+    },
+    // Ford
+    "Ford Mustang Mach-E": {
+      "Select RWD": 68,
+      "Premium RWD": 88,
+      "Premium AWD": 88,
+      "GT AWD": 88,
+    },
+    "Ford F-150 Lightning": {
+      "Standard Range": 98,
+      "Extended Range": 131,
+    },
+    // Hyundai
+    "Hyundai Ioniq 5": {
+      "SE Standard Range RWD": 58,
+      "SE Long Range RWD": 77.4,
+      "SEL Long Range AWD": 77.4,
+      "Limited Long Range AWD": 77.4,
+    },
+    "Hyundai Kona Electric": {
+      "SEL RWD": 64,
+      "Limited RWD": 64,
+    },
+    // Kia
+    "Kia EV6": {
+      "Light RWD": 58,
+      "Wind RWD": 77.4,
+      "Wind AWD": 77.4,
+      "GT-Line AWD": 77.4,
+    },
+    "Kia Niro EV": {
+      "EX RWD": 64.8,
+    },
+    // BMW
+    "BMW i4": {
+      "eDrive40": 83.9,
+      "M50 xDrive": 83.9,
+    },
+    "BMW iX": {
+      "xDrive50": 111.5,
+      "M60 xDrive": 111.5,
+    },
+    // Mercedes
+    "Mercedes EQS": {
+      "450+ RWD": 108.4,
+      "580 4MATIC": 108.4,
+    },
+    // Chevrolet
+    "Chevrolet Bolt EUV": {
+      "1LT FWD": 65,
+      "Premier FWD": 65,
+    },
+    "Chevrolet Bolt EV": {
+      "1LT FWD": 65,
+      "2LT FWD": 65,
+    },
+    // Volkswagen
+    "Volkswagen ID.4": {
+      "Pro RWD": 82,
+      "Pro S RWD": 82,
+      "Pro S AWD": 82,
+    },
+    // Polestar
+    "Polestar 2": {
+      "Single Motor": 78,
+      "Long Range Single Motor": 78,
+      "Long Range Dual Motor": 78,
+    },
+    // Audi
+    "Audi e-tron GT": {
+      "Premium Plus": 93.4,
+      "RS": 93.4,
+    },
+    "Audi Q4 e-tron": {
+      "40 Premium RWD": 77,
+      "50 Premium Plus AWD": 77,
+    },
+    // Lucid
+    "Lucid Air": {
+      "Pure RWD": 88,
+      "Touring AWD": 112,
+      "Grand Touring AWD": 112,
+      "Dream Edition": 118,
+    },
+    // Volvo
+    "Volvo C40 Recharge": {
+      "Twin Motor": 78,
+    },
+    "Volvo XC40 Recharge": {
+      "Twin Motor": 78,
+    },
+    // Genesis
+    "Genesis GV60": {
+      "Advanced RWD": 77.4,
+      "Performance AWD": 77.4,
+    },
+    // Porsche
+    "Porsche Taycan": {
+      "RWD": 79.2,
+      "4S AWD": 93.4,
+      "Turbo AWD": 93.4,
+      "Turbo S AWD": 93.4,
     },
   },
 }
