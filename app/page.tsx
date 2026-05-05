@@ -1,0 +1,946 @@
+"use client"
+
+import { useState, FormEvent } from "react"
+import { ArrowLeft, Zap, Clock, DollarSign, Mail, Battery, Plug, Timer } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
+
+// EV Battery Data
+const evData: Record<string, Record<string, Record<string, number>>> = {
+  "2024": {
+    "Rivian R1S": {
+      "Large AWD": 135,
+      "Max AWD": 149,
+      "Dual Motor AWD": 135,
+    },
+    "Tesla Model 3": {
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
+    },
+    "Tesla Model Y": {
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
+    },
+    "Hyundai Ioniq 6": {
+      "SE Long Range RWD": 77.4,
+      "SEL Long Range RWD": 77.4,
+      "SEL Long Range AWD": 77.4,
+    },
+    "Ford Mustang Mach-E": {
+      "Select RWD": 75.7,
+      "Premium AWD": 91,
+      "GT AWD": 91,
+    },
+    "BMW iX": {
+      "xDrive50": 111.5,
+      "M60 xDrive": 111.5,
+    },
+    "Chevrolet Blazer EV": {
+      "LT AWD": 102,
+      "RS AWD": 102,
+      "SS AWD": 102,
+    },
+    "Volkswagen ID.4": {
+      "Pro RWD": 77,
+      "Pro S RWD": 77,
+      "Pro S AWD": 77,
+    },
+  },
+  "2023": {
+    "Rivian R1S": {
+      "Large AWD": 135,
+    },
+    "Tesla Model 3": {
+      "Long Range AWD": 75,
+      "Performance AWD": 75,
+    },
+    "Hyundai Ioniq 6": {
+      "SE Long Range RWD": 77.4,
+      "SEL Long Range RWD": 77.4,
+    },
+  },
+}
+
+// Charger presets in kW
+const chargerPresets = [
+  { label: "Level 1 (1.0 kW)", value: 1.0 },
+  { label: "Level 2 Standard (5.4 kW)", value: 5.4 },
+  { label: "Level 2 Fast (11.2 kW)", value: 11.2 },
+]
+
+// TOU rate multipliers
+const touRates = [
+  { label: "Off-Peak (65%)", value: 0.65 },
+  { label: "Anytime (100%)", value: 1.0 },
+  { label: "Peak (140%)", value: 1.4 },
+]
+
+// Charging efficiency
+const CHARGING_EFFICIENCY = 0.9
+
+// Styling constants
+const styles = {
+  background: "#09090b",
+  cyan: "#22d3ee",
+  textPrimary: "#fafafa",
+  textSecondary: "#a1a1aa",
+  cardRadius: "2.5rem",
+}
+
+export default function VoltChargePage() {
+  const [year, setYear] = useState<string>("")
+  const [make, setMake] = useState<string>("")
+  const [trim, setTrim] = useState<string>("")
+  const [chargerPower, setChargerPower] = useState<number>(5.4)
+  const [touRate, setTouRate] = useState<number>(1.0)
+  const [electricityRate, setElectricityRate] = useState<string>("0.12")
+  const [batteryPercent, setBatteryPercent] = useState<string>("20")
+  const [targetPercent, setTargetPercent] = useState<string>("80")
+  const [email, setEmail] = useState<string>("")
+  const [emailSubmitted, setEmailSubmitted] = useState(false)
+
+  // Get available makes for selected year
+  const availableMakes = year ? Object.keys(evData[year] || {}) : []
+
+  // Get available trims for selected make
+  const availableTrims = year && make ? Object.keys(evData[year]?.[make] || {}) : []
+
+  // Get battery capacity
+  const batteryCapacity = year && make && trim ? evData[year]?.[make]?.[trim] : null
+
+  // Calculate charging metrics
+  const calculateCharging = () => {
+    if (!batteryCapacity) return null
+
+    const startPercent = parseFloat(batteryPercent) / 100
+    const endPercent = parseFloat(targetPercent) / 100
+    const rate = parseFloat(electricityRate)
+
+    if (isNaN(startPercent) || isNaN(endPercent) || isNaN(rate)) return null
+
+    const energyNeeded = batteryCapacity * (endPercent - startPercent)
+    const actualEnergyNeeded = energyNeeded / CHARGING_EFFICIENCY
+    const chargingTime = actualEnergyNeeded / chargerPower
+    const cost = actualEnergyNeeded * rate * touRate
+
+    return {
+      energyNeeded: actualEnergyNeeded.toFixed(1),
+      chargingTime: chargingTime.toFixed(1),
+      cost: cost.toFixed(2),
+    }
+  }
+
+  const results = calculateCharging()
+
+  const handleEmailSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if (email) {
+      setEmailSubmitted(true)
+    }
+  }
+
+  const handleYearChange = (value: string) => {
+    setYear(value)
+    setMake("")
+    setTrim("")
+  }
+
+  const handleMakeChange = (value: string) => {
+    setMake(value)
+    setTrim("")
+  }
+
+  return (
+    <div
+      style={{
+        backgroundColor: styles.background,
+        minHeight: "100vh",
+        color: styles.textPrimary,
+      }}
+    >
+      {/* Header */}
+      <header
+        style={{
+          padding: "1.5rem 2rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
+        }}
+      >
+        <Link
+          href="/adventure"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            color: styles.textSecondary,
+            textDecoration: "none",
+            fontSize: "0.875rem",
+            transition: "color 0.2s",
+          }}
+        >
+          <ArrowLeft size={18} />
+          Back
+        </Link>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <Zap
+            size={28}
+            style={{ color: styles.cyan }}
+          />
+          <span
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            Volt<span style={{ color: styles.cyan }}>/</span>Charge
+          </span>
+        </div>
+        <div style={{ width: "60px" }} />
+      </header>
+
+      {/* Hero Section */}
+      <section
+        style={{
+          textAlign: "center",
+          padding: "4rem 2rem 3rem",
+          maxWidth: "800px",
+          margin: "0 auto",
+        }}
+      >
+        <Badge
+          style={{
+            backgroundColor: "rgba(34, 211, 238, 0.1)",
+            color: styles.cyan,
+            border: `1px solid ${styles.cyan}`,
+            marginBottom: "1.5rem",
+            padding: "0.5rem 1rem",
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+          }}
+        >
+          Precision Logistics 2.0
+        </Badge>
+        <h1
+          style={{
+            fontSize: "clamp(2rem, 5vw, 3.5rem)",
+            fontWeight: 700,
+            lineHeight: 1.1,
+            marginBottom: "1rem",
+            letterSpacing: "-0.025em",
+          }}
+        >
+          Engineered for{" "}
+          <span style={{ color: styles.cyan }}>Peak Efficiency</span>
+        </h1>
+        <p
+          style={{
+            color: styles.textSecondary,
+            fontSize: "1.125rem",
+            maxWidth: "600px",
+            margin: "0 auto",
+            lineHeight: 1.6,
+          }}
+        >
+          Calculate your EV home charging costs with precision. Optimize your charging schedule and save on electricity.
+        </p>
+      </section>
+
+      {/* Feature Cards */}
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "1.5rem",
+          padding: "0 2rem 3rem",
+          maxWidth: "900px",
+          margin: "0 auto",
+        }}
+      >
+        <Card
+          style={{
+            backgroundColor: "rgba(34, 211, 238, 0.05)",
+            border: "1px solid rgba(34, 211, 238, 0.2)",
+            borderRadius: "1.5rem",
+            boxShadow: "0 0 40px rgba(34, 211, 238, 0.05)",
+          }}
+        >
+          <CardHeader>
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(34, 211, 238, 0.1)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <Timer size={24} style={{ color: styles.cyan }} />
+            </div>
+            <CardTitle style={{ color: styles.textPrimary }}>
+              Smart Timing
+            </CardTitle>
+            <CardDescription style={{ color: styles.textSecondary }}>
+              Optimize charging during off-peak hours to maximize savings on your electricity bill.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+
+        <Card
+          style={{
+            backgroundColor: "rgba(34, 211, 238, 0.05)",
+            border: "1px solid rgba(34, 211, 238, 0.2)",
+            borderRadius: "1.5rem",
+            boxShadow: "0 0 40px rgba(34, 211, 238, 0.05)",
+          }}
+        >
+          <CardHeader>
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(34, 211, 238, 0.1)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <Battery size={24} style={{ color: styles.cyan }} />
+            </div>
+            <CardTitle style={{ color: styles.textPrimary }}>
+              Battery Aware
+            </CardTitle>
+            <CardDescription style={{ color: styles.textSecondary }}>
+              Accurate calculations based on your specific EV model and battery specifications.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </section>
+
+      {/* Calculator Card */}
+      <section
+        style={{
+          padding: "0 2rem 4rem",
+          maxWidth: "900px",
+          margin: "0 auto",
+        }}
+      >
+        <Card
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.02)",
+            border: "1px solid rgba(34, 211, 238, 0.2)",
+            borderRadius: styles.cardRadius,
+            boxShadow: "0 0 60px rgba(34, 211, 238, 0.08)",
+            overflow: "hidden",
+          }}
+        >
+          <CardHeader
+            style={{
+              borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
+              padding: "2rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Plug size={24} style={{ color: styles.cyan }} />
+              <CardTitle
+                style={{
+                  color: styles.textPrimary,
+                  fontSize: "1.5rem",
+                  fontWeight: 700,
+                }}
+              >
+                Charging Cost Calculator
+              </CardTitle>
+            </div>
+          </CardHeader>
+
+          <CardContent style={{ padding: "2rem" }}>
+            {/* Vehicle Selection */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "1.5rem",
+                marginBottom: "2rem",
+              }}
+            >
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Year
+                </Label>
+                <Select value={year} onValueChange={handleYearChange}>
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue placeholder="Select year" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(evData).map((y) => (
+                      <SelectItem key={y} value={y}>
+                        {y}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Make / Model
+                </Label>
+                <Select value={make} onValueChange={handleMakeChange} disabled={!year}>
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue placeholder="Select make" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableMakes.map((m) => (
+                      <SelectItem key={m} value={m}>
+                        {m}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Trim
+                </Label>
+                <Select value={trim} onValueChange={setTrim} disabled={!make}>
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue placeholder="Select trim" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableTrims.map((t) => (
+                      <SelectItem key={t} value={t}>
+                        {t}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Battery Detected Display */}
+            {batteryCapacity && (
+              <div
+                style={{
+                  backgroundColor: "rgba(34, 211, 238, 0.1)",
+                  border: "1px solid rgba(34, 211, 238, 0.3)",
+                  borderRadius: "1rem",
+                  padding: "1rem 1.5rem",
+                  marginBottom: "2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                }}
+              >
+                <Battery size={24} style={{ color: styles.cyan }} />
+                <div>
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: styles.textSecondary,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    Battery Detected
+                  </p>
+                  <p
+                    style={{
+                      fontSize: "1.25rem",
+                      fontWeight: 700,
+                      color: styles.cyan,
+                    }}
+                  >
+                    {batteryCapacity} kWh
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Charging Parameters */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: "1.5rem",
+                marginBottom: "2rem",
+              }}
+            >
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Charger Power
+                </Label>
+                <Select
+                  value={chargerPower.toString()}
+                  onValueChange={(v) => setChargerPower(parseFloat(v))}
+                >
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {chargerPresets.map((preset) => (
+                      <SelectItem key={preset.value} value={preset.value.toString()}>
+                        {preset.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  TOU Rate
+                </Label>
+                <Select
+                  value={touRate.toString()}
+                  onValueChange={(v) => setTouRate(parseFloat(v))}
+                >
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {touRates.map((rate) => (
+                      <SelectItem key={rate.value} value={rate.value.toString()}>
+                        {rate.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Electricity Rate ($/kWh)
+                </Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={electricityRate}
+                  onChange={(e) => setElectricityRate(e.target.value)}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
+                    borderRadius: "0.75rem",
+                    color: styles.textPrimary,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Battery Percentage */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "1.5rem",
+                marginBottom: "2rem",
+              }}
+            >
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Current Battery %
+                </Label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={batteryPercent}
+                  onChange={(e) => setBatteryPercent(e.target.value)}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
+                    borderRadius: "0.75rem",
+                    color: styles.textPrimary,
+                  }}
+                />
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Target Battery %
+                </Label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={targetPercent}
+                  onChange={(e) => setTargetPercent(e.target.value)}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
+                    borderRadius: "0.75rem",
+                    color: styles.textPrimary,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Results */}
+            {results && (
+              <div
+                style={{
+                  backgroundColor: "rgba(34, 211, 238, 0.05)",
+                  border: "1px solid rgba(34, 211, 238, 0.2)",
+                  borderRadius: "1.5rem",
+                  padding: "2rem",
+                  marginBottom: "2rem",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: styles.textSecondary,
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  Charging Estimate
+                </h3>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: "1.5rem",
+                  }}
+                >
+                  <div style={{ textAlign: "center" }}>
+                    <div
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "12px",
+                        backgroundColor: "rgba(34, 211, 238, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0 auto 0.75rem",
+                      }}
+                    >
+                      <Zap size={24} style={{ color: styles.cyan }} />
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "1.75rem",
+                        fontWeight: 700,
+                        color: styles.cyan,
+                        marginBottom: "0.25rem",
+                      }}
+                    >
+                      {results.energyNeeded}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: styles.textSecondary,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                      }}
+                    >
+                      kWh Needed
+                    </p>
+                  </div>
+
+                  <div style={{ textAlign: "center" }}>
+                    <div
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "12px",
+                        backgroundColor: "rgba(34, 211, 238, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0 auto 0.75rem",
+                      }}
+                    >
+                      <Clock size={24} style={{ color: styles.cyan }} />
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "1.75rem",
+                        fontWeight: 700,
+                        color: styles.cyan,
+                        marginBottom: "0.25rem",
+                      }}
+                    >
+                      {results.chargingTime}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: styles.textSecondary,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                      }}
+                    >
+                      Hours
+                    </p>
+                  </div>
+
+                  <div style={{ textAlign: "center" }}>
+                    <div
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        borderRadius: "12px",
+                        backgroundColor: "rgba(34, 211, 238, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        margin: "0 auto 0.75rem",
+                      }}
+                    >
+                      <DollarSign size={24} style={{ color: styles.cyan }} />
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "1.75rem",
+                        fontWeight: 700,
+                        color: styles.cyan,
+                        marginBottom: "0.25rem",
+                      }}
+                    >
+                      ${results.cost}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: styles.textSecondary,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                      }}
+                    >
+                      Est. Cost
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Email Signup */}
+            <div
+              style={{
+                borderTop: "1px solid rgba(34, 211, 238, 0.1)",
+                paddingTop: "2rem",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                <Mail size={20} style={{ color: styles.cyan }} />
+                <h3
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    color: styles.textPrimary,
+                  }}
+                >
+                  Get Charging Tips & Updates
+                </h3>
+              </div>
+              {emailSubmitted ? (
+                <div
+                  style={{
+                    backgroundColor: "rgba(34, 211, 238, 0.1)",
+                    border: "1px solid rgba(34, 211, 238, 0.3)",
+                    borderRadius: "1rem",
+                    padding: "1rem",
+                    textAlign: "center",
+                    color: styles.cyan,
+                  }}
+                >
+                  Thanks for subscribing! Check your inbox for charging tips.
+                </div>
+              ) : (
+                <form
+                  onSubmit={handleEmailSubmit}
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                  }}
+                >
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    style={{
+                      flex: 1,
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  />
+                  <Button
+                    type="submit"
+                    style={{
+                      backgroundColor: styles.cyan,
+                      color: styles.background,
+                      borderRadius: "0.75rem",
+                      fontWeight: 600,
+                      padding: "0 1.5rem",
+                    }}
+                  >
+                    Subscribe
+                  </Button>
+                </form>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Footer */}
+      <footer
+        style={{
+          textAlign: "center",
+          padding: "2rem",
+          borderTop: "1px solid rgba(34, 211, 238, 0.1)",
+          color: styles.textSecondary,
+          fontSize: "0.875rem",
+        }}
+      >
+        <p>&copy; 2024 Volt/Charge. Engineered for efficiency.</p>
+      </footer>
+    </div>
+  )
+}
