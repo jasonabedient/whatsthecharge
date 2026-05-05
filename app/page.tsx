@@ -159,8 +159,14 @@ export default function VoltChargePage() {
   const handleCalculate = () => {
     if (currentResults) {
       setCalculatedResults(currentResults)
-      setShowEmailPrompt(true)
-      setShowResults(false)
+      // If email already submitted, skip prompt and show results directly
+      if (emailSubmitted) {
+        setShowResults(true)
+        setShowEmailPrompt(false)
+      } else {
+        setShowEmailPrompt(true)
+        setShowResults(false)
+      }
       setHasCalculated(true)
       setInputsChangedSinceCalculate(false)
     }
@@ -968,6 +974,40 @@ export default function VoltChargePage() {
               </div>
             )}
 
+            {/* Newsletter Signup */}
+            {showResults && (
+              <div
+                style={{
+                  borderTop: "1px solid rgba(34, 211, 238, 0.1)",
+                  paddingTop: "2rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
+                  <Mail size={20} style={{ color: styles.cyan }} />
+                  <h3
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: 600,
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    Get Charging Tips & Updates
+                  </h3>
+                </div>
+                <div
+                  style={{
+                    backgroundColor: "rgba(34, 211, 238, 0.1)",
+                    border: "1px solid rgba(34, 211, 238, 0.3)",
+                    borderRadius: "1rem",
+                    padding: "1rem",
+                    textAlign: "center",
+                    color: styles.cyan,
+                  }}
+                >
+                  Thanks for subscribing! Check your inbox for charging tips.
+                </div>
+              </div>
+            )}
 
           </CardContent>
         </Card>
