@@ -222,21 +222,30 @@ export default function VoltChargePage() {
           margin: "0 auto",
         }}
       >
-        <Badge
-          style={{
-            backgroundColor: "rgba(34, 211, 238, 0.1)",
-            color: styles.cyan,
-            border: `1px solid ${styles.cyan}`,
-            marginBottom: "1.5rem",
-            padding: "0.5rem 1rem",
-            fontSize: "0.75rem",
-            fontWeight: 600,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-          }}
+        <a
+          href="https://adventure.bedo.studio"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: "none" }}
         >
-          Precision Logistics 2.0
-        </Badge>
+          <Badge
+            style={{
+              backgroundColor: "rgba(34, 211, 238, 0.1)",
+              color: styles.cyan,
+              border: `1px solid ${styles.cyan}`,
+              marginBottom: "1.5rem",
+              padding: "0.5rem 1rem",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              cursor: "pointer",
+              transition: "background-color 0.2s",
+            }}
+          >
+            Bedo Adventure
+          </Badge>
+        </a>
         <h1
           style={{
             fontSize: "clamp(2rem, 5vw, 3.5rem)",
