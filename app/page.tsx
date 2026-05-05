@@ -16,13 +16,13 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Tesla
     "Tesla Model 3": {
       "Standard Range RWD": 60,
-      "Long Range AWD": 82,
-      "Performance AWD": 82,
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
     },
     "Tesla Model Y": {
       "Standard Range RWD": 60,
-      "Long Range AWD": 82,
-      "Performance AWD": 82,
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
     },
     "Tesla Model S": {
       "Long Range AWD": 100,
@@ -39,17 +39,17 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Rivian
     "Rivian R1S": {
       "Standard AWD": 105,
-      "Large AWD": 135,
+      "Large AWD": 128,
       "Max AWD": 149,
     },
     "Rivian R1T": {
       "Standard AWD": 105,
-      "Large AWD": 135,
+      "Large AWD": 128,
       "Max AWD": 149,
     },
     // Ford
     "Ford Mustang Mach-E": {
-      "Select RWD": 72,
+      "Select RWD": 70,
       "Premium RWD": 91,
       "Premium AWD": 91,
       "GT AWD": 91,
@@ -95,18 +95,18 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // BMW
     "BMW i4": {
-      "eDrive35": 66,
+      "eDrive35": 70.2,
       "eDrive40": 83.9,
       "M50 xDrive": 83.9,
     },
     "BMW iX": {
-      "xDrive50": 111.5,
+      "xDrive50": 105,
       "M60 xDrive": 111.5,
     },
     // Mercedes
     "Mercedes EQS": {
-      "450+ RWD": 108.4,
-      "580 4MATIC": 108.4,
+      "450+ RWD": 108,
+      "580 4MATIC": 120,
     },
     "Mercedes EQE": {
       "350+ RWD": 90.6,
@@ -137,17 +137,18 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Volkswagen
     "Volkswagen ID.4": {
       "Standard RWD": 62,
-      "Pro RWD": 82,
+      "Pro RWD": 77,
       "Pro S RWD": 82,
       "Pro S Plus AWD": 82,
     },
     "Volkswagen ID.Buzz": {
-      "Pro S RWD": 91,
-      "Pro S Plus RWD": 91,
+      "Pro S RWD": 77,
+      "Pro S Plus RWD": 77,
     },
     // Polestar
     "Polestar 2": {
-      "Long Range Single Motor": 82,
+      "Standard Range Single Motor": 69,
+      "Long Range Single Motor": 78,
       "Long Range Dual Motor": 82,
     },
     "Polestar 3": {
@@ -155,8 +156,8 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
       "Performance Pack": 111,
     },
     "Polestar 4": {
-      "Long Range Single Motor": 102,
-      "Long Range Dual Motor": 102,
+      "Long Range Single Motor": 101,
+      "Long Range Dual Motor": 101,
     },
     // Audi
     "Audi e-tron GT": {
@@ -178,15 +179,15 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     "Lucid Air": {
       "Pure RWD": 88,
       "Touring AWD": 112,
-      "Grand Touring AWD": 112,
+      "Grand Touring AWD": 118,
     },
     // Volvo
     "Volvo EX90": {
-      "Plus Twin Motor": 111,
-      "Ultra Twin Motor": 111,
+      "Plus Twin Motor": 107,
+      "Ultra Twin Motor": 117,
     },
     "Volvo EX30": {
-      "Single Motor": 51,
+      "Single Motor": 64,
       "Twin Motor": 69,
     },
     "Volvo C40 Recharge": {
@@ -226,12 +227,12 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Tesla
     "Tesla Model 3": {
       "Standard Range+ RWD": 60,
-      "Long Range AWD": 82,
-      "Performance AWD": 82,
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
     },
     "Tesla Model Y": {
-      "Long Range AWD": 82,
-      "Performance AWD": 82,
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
     },
     "Tesla Model S": {
       "Long Range AWD": 100,
@@ -243,16 +244,16 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // Rivian
     "Rivian R1S": {
-      "Large AWD": 135,
+      "Large AWD": 128,
       "Max AWD": 149,
     },
     "Rivian R1T": {
-      "Large AWD": 135,
+      "Large AWD": 128,
       "Max AWD": 149,
     },
     // Ford
     "Ford Mustang Mach-E": {
-      "Select RWD": 72,
+      "Select RWD": 70,
       "Premium RWD": 91,
       "Premium AWD": 91,
       "GT AWD": 91,
@@ -291,18 +292,18 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // BMW
     "BMW i4": {
-      "eDrive35": 66,
+      "eDrive35": 70.2,
       "eDrive40": 83.9,
       "M50 xDrive": 83.9,
     },
     "BMW iX": {
-      "xDrive50": 111.5,
+      "xDrive50": 105,
       "M60 xDrive": 111.5,
     },
     // Mercedes
     "Mercedes EQS": {
-      "450+ RWD": 108.4,
-      "580 4MATIC": 108.4,
+      "450+ RWD": 108,
+      "580 4MATIC": 120,
     },
     "Mercedes EQE": {
       "350+ RWD": 90.6,
@@ -320,14 +321,14 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Volkswagen
     "Volkswagen ID.4": {
       "Standard RWD": 62,
-      "Pro RWD": 82,
+      "Pro RWD": 77,
       "Pro S RWD": 82,
       "Pro S Plus AWD": 82,
     },
     // Polestar
     "Polestar 2": {
-      "Single Motor": 78,
-      "Long Range Single Motor": 82,
+      "Standard Range Single Motor": 69,
+      "Long Range Single Motor": 78,
       "Long Range Dual Motor": 82,
     },
     // Audi
@@ -348,7 +349,7 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     "Lucid Air": {
       "Pure RWD": 88,
       "Touring AWD": 112,
-      "Grand Touring AWD": 112,
+      "Grand Touring AWD": 118,
     },
     // Volvo
     "Volvo C40 Recharge": {
@@ -387,12 +388,12 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Tesla
     "Tesla Model 3": {
       "Standard Range+ RWD": 60,
-      "Long Range AWD": 82,
-      "Performance AWD": 82,
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
     },
     "Tesla Model Y": {
-      "Long Range AWD": 82,
-      "Performance AWD": 82,
+      "Long Range AWD": 78.4,
+      "Performance AWD": 78.4,
     },
     "Tesla Model S": {
       "Long Range AWD": 100,
@@ -404,17 +405,17 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // Rivian
     "Rivian R1S": {
-      "Large AWD": 135,
+      "Large AWD": 128,
     },
     "Rivian R1T": {
-      "Large AWD": 135,
+      "Large AWD": 128,
     },
     // Ford
     "Ford Mustang Mach-E": {
-      "Select RWD": 68,
-      "Premium RWD": 88,
-      "Premium AWD": 88,
-      "GT AWD": 88,
+      "Select RWD": 70,
+      "Premium RWD": 91,
+      "Premium AWD": 91,
+      "GT AWD": 91,
     },
     "Ford F-150 Lightning": {
       "Standard Range": 98,
@@ -447,13 +448,13 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
       "M50 xDrive": 83.9,
     },
     "BMW iX": {
-      "xDrive50": 111.5,
+      "xDrive50": 105,
       "M60 xDrive": 111.5,
     },
     // Mercedes
     "Mercedes EQS": {
-      "450+ RWD": 108.4,
-      "580 4MATIC": 108.4,
+      "450+ RWD": 108,
+      "580 4MATIC": 120,
     },
     // Chevrolet
     "Chevrolet Bolt EUV": {
@@ -466,13 +467,13 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // Volkswagen
     "Volkswagen ID.4": {
-      "Pro RWD": 82,
+      "Pro RWD": 77,
       "Pro S RWD": 82,
       "Pro S AWD": 82,
     },
     // Polestar
     "Polestar 2": {
-      "Single Motor": 78,
+      "Standard Range Single Motor": 69,
       "Long Range Single Motor": 78,
       "Long Range Dual Motor": 78,
     },
@@ -489,7 +490,7 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     "Lucid Air": {
       "Pure RWD": 88,
       "Touring AWD": 112,
-      "Grand Touring AWD": 112,
+      "Grand Touring AWD": 118,
       "Dream Edition": 118,
     },
     // Volvo
@@ -939,7 +940,7 @@ export default function VoltChargePage() {
                       marginBottom: "0.25rem",
                     }}
                   >
-                    Battery Detected
+                    Battery Detected (Usable)
                   </p>
                   <p
                     style={{
