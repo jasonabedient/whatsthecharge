@@ -97,6 +97,8 @@ export default function VoltChargePage() {
   const [make, setMake] = useState<string>("")
   const [trim, setTrim] = useState<string>("")
   const [chargerPower, setChargerPower] = useState<number>(5.4)
+  const [chargerSelection, setChargerSelection] = useState<string>("5.4")
+  const [customChargerPower, setCustomChargerPower] = useState<string>("")
   const [touRate, setTouRate] = useState<number>(1.0)
   const [electricityRate, setElectricityRate] = useState<string>("0.12")
   const [batteryPercent, setBatteryPercent] = useState<string>("20")
@@ -267,7 +269,7 @@ export default function VoltChargePage() {
             lineHeight: 1.6,
           }}
         >
-          Calculate your EV home charging costs with precision. Optimize your charging schedule and save on electricity.
+          Calculate your EV home charging time and costs. Optimize your charging schedule and save on electricity.
         </p>
       </section>
 
@@ -488,8 +490,14 @@ export default function VoltChargePage() {
                   Charger Power
                 </Label>
                 <Select
-                  value={chargerPower.toString()}
-                  onValueChange={(v) => setChargerPower(parseFloat(v))}
+                  value={chargerSelection}
+                  onValueChange={(v) => {
+                    setChargerSelection(v)
+                    if (v !== "custom") {
+                      setChargerPower(parseFloat(v))
+                      setCustomChargerPower("")
+                    }
+                  }}
                 >
                   <SelectTrigger
                     style={{
@@ -507,8 +515,32 @@ export default function VoltChargePage() {
                         {preset.label}
                       </SelectItem>
                     ))}
+                    <SelectItem value="custom">Custom</SelectItem>
                   </SelectContent>
                 </Select>
+                {chargerSelection === "custom" && (
+                  <Input
+                    type="number"
+                    step="0.1"
+                    min="0.1"
+                    placeholder="Enter kW"
+                    value={customChargerPower}
+                    onChange={(e) => {
+                      setCustomChargerPower(e.target.value)
+                      const val = parseFloat(e.target.value)
+                      if (!isNaN(val) && val > 0) {
+                        setChargerPower(val)
+                      }
+                    }}
+                    style={{
+                      marginTop: "0.75rem",
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  />
+                )}
               </div>
 
               <div>
