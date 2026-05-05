@@ -106,6 +106,13 @@ export default function VoltChargePage() {
   const [email, setEmail] = useState<string>("")
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   const [showResults, setShowResults] = useState(false)
+  const [calculatedResults, setCalculatedResults] = useState<{
+    energyNeeded: string
+    chargingTime: string
+    cost: string
+  } | null>(null)
+  const [hasCalculated, setHasCalculated] = useState(false)
+  const [inputsChangedSinceCalculate, setInputsChangedSinceCalculate] = useState(false)
 
   // Get available makes for selected year
   const availableMakes = year ? Object.keys(evData[year] || {}) : []
@@ -138,7 +145,28 @@ export default function VoltChargePage() {
     }
   }
 
-  const results = calculateCharging()
+  const currentResults = calculateCharging()
+  const canCalculate = currentResults !== null
+
+  // Mark inputs as changed when relevant fields change
+  const markInputsChanged = () => {
+    if (hasCalculated) {
+      setInputsChangedSinceCalculate(true)
+    }
+  }
+
+  const handleCalculate = () => {
+    if (currentResults) {
+      setCalculatedResults(currentResults)
+      setShowResults(true)
+      setHasCalculated(true)
+      setInputsChangedSinceCalculate(false)
+    }
+  }
+
+  // Button state: disabled if already calculated and no changes made, or if can't calculate
+  const isButtonDisabled = !canCalculate || (hasCalculated && !inputsChangedSinceCalculate)
+  const buttonText = hasCalculated && !inputsChangedSinceCalculate ? "Recalculate" : "Calculate"
 
   const handleEmailSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -497,6 +525,7 @@ export default function VoltChargePage() {
                       setChargerPower(parseFloat(v))
                       setCustomChargerPower("")
                     }
+                    markInputsChanged()
                   }}
                 >
                   <SelectTrigger
@@ -531,6 +560,7 @@ export default function VoltChargePage() {
                       if (!isNaN(val) && val > 0) {
                         setChargerPower(val)
                       }
+                      markInputsChanged()
                     }}
                     style={{
                       marginTop: "0.75rem",
@@ -561,7 +591,10 @@ export default function VoltChargePage() {
                   type="number"
                   step="0.01"
                   value={electricityRate}
-                  onChange={(e) => setElectricityRate(e.target.value)}
+                  onChange={(e) => {
+                    setElectricityRate(e.target.value)
+                    markInputsChanged()
+                  }}
                   style={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     border: "1px solid rgba(34, 211, 238, 0.2)",
@@ -587,7 +620,10 @@ export default function VoltChargePage() {
                 </Label>
                 <Select
                   value={touRate.toString()}
-                  onValueChange={(v) => setTouRate(parseFloat(v))}
+                  onValueChange={(v) => {
+                    setTouRate(parseFloat(v))
+                    markInputsChanged()
+                  }}
                 >
                   <SelectTrigger
                     style={{
@@ -647,7 +683,10 @@ export default function VoltChargePage() {
                   min="0"
                   max="100"
                   value={batteryPercent}
-                  onChange={(e) => setBatteryPercent(e.target.value)}
+                  onChange={(e) => {
+                    setBatteryPercent(e.target.value)
+                    markInputsChanged()
+                  }}
                   style={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     border: "1px solid rgba(34, 211, 238, 0.2)",
@@ -676,7 +715,10 @@ export default function VoltChargePage() {
                   min="0"
                   max="100"
                   value={targetPercent}
-                  onChange={(e) => setTargetPercent(e.target.value)}
+                  onChange={(e) => {
+                    setTargetPercent(e.target.value)
+                    markInputsChanged()
+                  }}
                   style={{
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     border: "1px solid rgba(34, 211, 238, 0.2)",
@@ -689,25 +731,25 @@ export default function VoltChargePage() {
 
             {/* Calculate Button */}
             <Button
-              onClick={() => setShowResults(true)}
-              disabled={!results}
+              onClick={handleCalculate}
+              disabled={isButtonDisabled}
               style={{
                 width: "100%",
-                backgroundColor: results ? styles.cyan : "rgba(34, 211, 238, 0.3)",
+                backgroundColor: !isButtonDisabled ? styles.cyan : "rgba(34, 211, 238, 0.3)",
                 color: styles.background,
                 borderRadius: "0.75rem",
                 fontWeight: 600,
                 padding: "1rem 1.5rem",
                 fontSize: "1rem",
                 marginBottom: "2rem",
-                cursor: results ? "pointer" : "not-allowed",
+                cursor: !isButtonDisabled ? "pointer" : "not-allowed",
               }}
             >
-              Calculate
+              {buttonText}
             </Button>
 
             {/* Results */}
-            {showResults && results && (
+            {showResults && calculatedResults && (
               <div
                 style={{
                   backgroundColor: "rgba(34, 211, 238, 0.05)",
@@ -759,7 +801,7 @@ export default function VoltChargePage() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      {results.energyNeeded}
+                      {calculatedResults.energyNeeded}
                     </p>
                     <p
                       style={{
@@ -796,7 +838,7 @@ export default function VoltChargePage() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      {results.chargingTime}
+                      {calculatedResults.chargingTime}
                     </p>
                     <p
                       style={{
@@ -833,7 +875,7 @@ export default function VoltChargePage() {
                         marginBottom: "0.25rem",
                       }}
                     >
-                      ${results.cost}
+                      ${calculatedResults.cost}
                     </p>
                     <p
                       style={{
