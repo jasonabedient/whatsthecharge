@@ -39,12 +39,12 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     // Rivian
     "Rivian R1S": {
       "Standard AWD": 105,
-      "Large AWD": 128,
+      "Large AWD": 131,
       "Max AWD": 149,
     },
     "Rivian R1T": {
       "Standard AWD": 105,
-      "Large AWD": 128,
+      "Large AWD": 131,
       "Max AWD": 149,
     },
     // Ford
@@ -244,11 +244,11 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // Rivian
     "Rivian R1S": {
-      "Large AWD": 128,
+      "Large AWD": 131,
       "Max AWD": 149,
     },
     "Rivian R1T": {
-      "Large AWD": 128,
+      "Large AWD": 131,
       "Max AWD": 149,
     },
     // Ford
@@ -405,10 +405,10 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
     },
     // Rivian
     "Rivian R1S": {
-      "Large AWD": 128,
+      "Large AWD": 131,
     },
     "Rivian R1T": {
-      "Large AWD": 128,
+      "Large AWD": 131,
     },
     // Ford
     "Ford Mustang Mach-E": {
