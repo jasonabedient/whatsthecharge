@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, FormEvent } from "react"
-import { ArrowLeft, Zap, Clock, DollarSign, Mail, Battery, Plug, Timer } from "lucide-react"
+import { ArrowLeft, Zap, Clock, DollarSign, Mail, Battery, Plug } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 
@@ -103,6 +103,7 @@ export default function VoltChargePage() {
   const [targetPercent, setTargetPercent] = useState<string>("80")
   const [email, setEmail] = useState<string>("")
   const [emailSubmitted, setEmailSubmitted] = useState(false)
+  const [showResults, setShowResults] = useState(false)
 
   // Get available makes for selected year
   const availableMakes = year ? Object.keys(evData[year] || {}) : []
@@ -206,7 +207,7 @@ export default function VoltChargePage() {
               letterSpacing: "-0.025em",
             }}
           >
-            Volt<span style={{ color: styles.cyan }}>/</span>Charge
+            EV Charging Calculator
           </span>
         </div>
         <div style={{ width: "60px" }} />
@@ -245,8 +246,8 @@ export default function VoltChargePage() {
             letterSpacing: "-0.025em",
           }}
         >
-          Engineered for{" "}
-          <span style={{ color: styles.cyan }}>Peak Efficiency</span>
+          What&apos;s The{" "}
+          <span style={{ color: styles.cyan }}>Charge?</span>
         </h1>
         <p
           style={{
@@ -259,82 +260,6 @@ export default function VoltChargePage() {
         >
           Calculate your EV home charging costs with precision. Optimize your charging schedule and save on electricity.
         </p>
-      </section>
-
-      {/* Feature Cards */}
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "1.5rem",
-          padding: "0 2rem 3rem",
-          maxWidth: "900px",
-          margin: "0 auto",
-        }}
-      >
-        <Card
-          style={{
-            backgroundColor: "rgba(34, 211, 238, 0.05)",
-            border: "1px solid rgba(34, 211, 238, 0.2)",
-            borderRadius: "1.5rem",
-            boxShadow: "0 0 40px rgba(34, 211, 238, 0.05)",
-          }}
-        >
-          <CardHeader>
-            <div
-              style={{
-                width: "48px",
-                height: "48px",
-                borderRadius: "12px",
-                backgroundColor: "rgba(34, 211, 238, 0.1)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "0.5rem",
-              }}
-            >
-              <Timer size={24} style={{ color: styles.cyan }} />
-            </div>
-            <CardTitle style={{ color: styles.textPrimary }}>
-              Smart Timing
-            </CardTitle>
-            <CardDescription style={{ color: styles.textSecondary }}>
-              Optimize charging during off-peak hours to maximize savings on your electricity bill.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-
-        <Card
-          style={{
-            backgroundColor: "rgba(34, 211, 238, 0.05)",
-            border: "1px solid rgba(34, 211, 238, 0.2)",
-            borderRadius: "1.5rem",
-            boxShadow: "0 0 40px rgba(34, 211, 238, 0.05)",
-          }}
-        >
-          <CardHeader>
-            <div
-              style={{
-                width: "48px",
-                height: "48px",
-                borderRadius: "12px",
-                backgroundColor: "rgba(34, 211, 238, 0.1)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "0.5rem",
-              }}
-            >
-              <Battery size={24} style={{ color: styles.cyan }} />
-            </div>
-            <CardTitle style={{ color: styles.textPrimary }}>
-              Battery Aware
-            </CardTitle>
-            <CardDescription style={{ color: styles.textSecondary }}>
-              Accurate calculations based on your specific EV model and battery specifications.
-            </CardDescription>
-          </CardHeader>
-        </Card>
       </section>
 
       {/* Calculator Card */}
@@ -712,8 +637,27 @@ export default function VoltChargePage() {
               </div>
             </div>
 
+            {/* Calculate Button */}
+            <Button
+              onClick={() => setShowResults(true)}
+              disabled={!results}
+              style={{
+                width: "100%",
+                backgroundColor: results ? styles.cyan : "rgba(34, 211, 238, 0.3)",
+                color: styles.background,
+                borderRadius: "0.75rem",
+                fontWeight: 600,
+                padding: "1rem 1.5rem",
+                fontSize: "1rem",
+                marginBottom: "2rem",
+                cursor: results ? "pointer" : "not-allowed",
+              }}
+            >
+              Calculate
+            </Button>
+
             {/* Results */}
-            {results && (
+            {showResults && results && (
               <div
                 style={{
                   backgroundColor: "rgba(34, 211, 238, 0.05)",
