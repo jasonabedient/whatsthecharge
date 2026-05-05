@@ -321,7 +321,7 @@ export default function VoltChargePage() {
           <CardHeader
             style={{
               borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
-              padding: "2rem",
+              padding: "1.25rem 2rem",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -338,14 +338,14 @@ export default function VoltChargePage() {
             </div>
           </CardHeader>
 
-          <CardContent style={{ padding: "2rem" }}>
+          <CardContent style={{ padding: "1.5rem 2rem 2rem" }}>
             {/* Vehicle Selection */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
                 gap: "1.5rem",
-                marginBottom: "2rem",
+                marginBottom: "1.5rem",
               }}
             >
               <div>
