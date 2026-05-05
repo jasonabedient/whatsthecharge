@@ -106,6 +106,7 @@ export default function VoltChargePage() {
   const [email, setEmail] = useState<string>("")
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   const [showResults, setShowResults] = useState(false)
+  const [showEmailPrompt, setShowEmailPrompt] = useState(false)
   const [calculatedResults, setCalculatedResults] = useState<{
     energyNeeded: string
     chargingTime: string
@@ -158,7 +159,8 @@ export default function VoltChargePage() {
   const handleCalculate = () => {
     if (currentResults) {
       setCalculatedResults(currentResults)
-      setShowResults(true)
+      setShowEmailPrompt(true)
+      setShowResults(false)
       setHasCalculated(true)
       setInputsChangedSinceCalculate(false)
     }
@@ -171,7 +173,10 @@ export default function VoltChargePage() {
   const handleEmailSubmit = (e: FormEvent) => {
     e.preventDefault()
     if (email) {
+      console.log("[v0] Lead captured:", { email, vehicle: `${year} ${make} ${trim}`, results: calculatedResults })
       setEmailSubmitted(true)
+      setShowEmailPrompt(false)
+      setShowResults(true)
     }
   }
 
@@ -748,6 +753,77 @@ export default function VoltChargePage() {
               {buttonText}
             </Button>
 
+            {/* Email Prompt */}
+            {showEmailPrompt && !emailSubmitted && (
+              <div
+                style={{
+                  backgroundColor: "rgba(34, 211, 238, 0.05)",
+                  border: "1px solid rgba(34, 211, 238, 0.2)",
+                  borderRadius: "1.5rem",
+                  padding: "2rem",
+                  marginBottom: "2rem",
+                  textAlign: "center",
+                }}
+              >
+                <Mail size={32} style={{ color: styles.cyan, margin: "0 auto 1rem" }} />
+                <h3
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                    color: styles.textPrimary,
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  Enter your email to see your charging estimate
+                </h3>
+                <p
+                  style={{
+                    fontSize: "0.875rem",
+                    color: styles.textSecondary,
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  We&apos;ll also send you charging tips and updates.
+                </p>
+                <form
+                  onSubmit={handleEmailSubmit}
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                    maxWidth: "400px",
+                    margin: "0 auto",
+                  }}
+                >
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    style={{
+                      flex: 1,
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  />
+                  <Button
+                    type="submit"
+                    style={{
+                      backgroundColor: styles.cyan,
+                      color: styles.background,
+                      borderRadius: "0.75rem",
+                      fontWeight: 600,
+                      padding: "0 1.5rem",
+                    }}
+                  >
+                    See Results
+                  </Button>
+                </form>
+              </div>
+            )}
+
             {/* Results */}
             {showResults && calculatedResults && (
               <div
@@ -892,75 +968,7 @@ export default function VoltChargePage() {
               </div>
             )}
 
-            {/* Email Signup */}
-            <div
-              style={{
-                borderTop: "1px solid rgba(34, 211, 238, 0.1)",
-                paddingTop: "2rem",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-                <Mail size={20} style={{ color: styles.cyan }} />
-                <h3
-                  style={{
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    color: styles.textPrimary,
-                  }}
-                >
-                  Get Charging Tips & Updates
-                </h3>
-              </div>
-              {emailSubmitted ? (
-                <div
-                  style={{
-                    backgroundColor: "rgba(34, 211, 238, 0.1)",
-                    border: "1px solid rgba(34, 211, 238, 0.3)",
-                    borderRadius: "1rem",
-                    padding: "1rem",
-                    textAlign: "center",
-                    color: styles.cyan,
-                  }}
-                >
-                  Thanks for subscribing! Check your inbox for charging tips.
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleEmailSubmit}
-                  style={{
-                    display: "flex",
-                    gap: "1rem",
-                  }}
-                >
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    style={{
-                      flex: 1,
-                      backgroundColor: "rgba(255, 255, 255, 0.05)",
-                      border: "1px solid rgba(34, 211, 238, 0.2)",
-                      borderRadius: "0.75rem",
-                      color: styles.textPrimary,
-                    }}
-                  />
-                  <Button
-                    type="submit"
-                    style={{
-                      backgroundColor: styles.cyan,
-                      color: styles.background,
-                      borderRadius: "0.75rem",
-                      fontWeight: 600,
-                      padding: "0 1.5rem",
-                    }}
-                  >
-                    Subscribe
-                  </Button>
-                </form>
-              )}
-            </div>
+
           </CardContent>
         </Card>
       </section>
