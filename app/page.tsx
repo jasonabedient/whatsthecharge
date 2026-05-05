@@ -68,9 +68,9 @@ const evData: Record<string, Record<string, Record<string, number>>> = {
 
 // Charger presets in kW
 const chargerPresets = [
-  { label: "Level 1 (1.0 kW)", value: 1.0 },
-  { label: "Level 2 Standard (5.4 kW)", value: 5.4 },
-  { label: "Level 2 Fast (11.2 kW)", value: 11.2 },
+  { label: "1.4 kW (Level 1 Basic)", value: 1.4 },
+  { label: "5.8 kW (Level 2 - 24A)", value: 5.8 },
+  { label: "11.5 kW (Level 2 - 48A)", value: 11.5 },
 ]
 
 // TOU rate multipliers
@@ -96,8 +96,8 @@ export default function VoltChargePage() {
   const [year, setYear] = useState<string>("")
   const [make, setMake] = useState<string>("")
   const [trim, setTrim] = useState<string>("")
-  const [chargerPower, setChargerPower] = useState<number>(5.4)
-  const [chargerSelection, setChargerSelection] = useState<string>("5.4")
+  const [chargerPower, setChargerPower] = useState<number>(5.8)
+  const [chargerSelection, setChargerSelection] = useState<string>("5.8")
   const [customChargerPower, setCustomChargerPower] = useState<string>("")
   const [touRate, setTouRate] = useState<number>(1.0)
   const [electricityRate, setElectricityRate] = useState<string>("0.12")
