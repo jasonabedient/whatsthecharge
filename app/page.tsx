@@ -75,8 +75,8 @@ const chargerPresets = [
 
 // TOU rate multipliers
 const touRates = [
-  { label: "Off-Peak (65%)", value: 0.65 },
   { label: "Anytime (100%)", value: 1.0 },
+  { label: "Off-Peak (65%)", value: 0.65 },
   { label: "Peak (140%)", value: 1.4 },
 ]
 
@@ -555,6 +555,34 @@ export default function VoltChargePage() {
                     display: "block",
                   }}
                 >
+                  Electricity Rate ($/kWh)
+                </Label>
+                <Input
+                  type="number"
+                  step="0.01"
+                  value={electricityRate}
+                  onChange={(e) => setElectricityRate(e.target.value)}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
+                    borderRadius: "0.75rem",
+                    color: styles.textPrimary,
+                  }}
+                />
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   TOU Rate
                 </Label>
                 <Select
@@ -579,34 +607,15 @@ export default function VoltChargePage() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div>
-                <Label
+                <p
                   style={{
-                    color: styles.textSecondary,
                     fontSize: "0.75rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    marginBottom: "0.5rem",
-                    display: "block",
+                    color: styles.textSecondary,
+                    marginTop: "0.5rem",
                   }}
                 >
-                  Electricity Rate ($/kWh)
-                </Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={electricityRate}
-                  onChange={(e) => setElectricityRate(e.target.value)}
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(34, 211, 238, 0.2)",
-                    borderRadius: "0.75rem",
-                    color: styles.textPrimary,
-                  }}
-                />
+                  Effective rate: ${(parseFloat(electricityRate) * touRate).toFixed(3)}/kWh
+                </p>
               </div>
             </div>
 
