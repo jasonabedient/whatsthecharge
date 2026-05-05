@@ -174,7 +174,8 @@ export default function VoltChargePage() {
 
   // Button state: disabled if already calculated and no changes made, or if can't calculate
   const isButtonDisabled = !canCalculate || (hasCalculated && !inputsChangedSinceCalculate)
-  const buttonText = hasCalculated && !inputsChangedSinceCalculate ? "Recalculate" : "Calculate"
+  // Button shows "Calculate" only on first use, then permanently "Recalculate" after first results
+  const buttonText = emailSubmitted ? "Recalculate" : "Calculate"
 
   const handleEmailSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -827,6 +828,15 @@ export default function VoltChargePage() {
                     See Results
                   </Button>
                 </form>
+                <p
+                  style={{
+                    fontSize: "0.75rem",
+                    color: styles.textSecondary,
+                    marginTop: "1rem",
+                  }}
+                >
+                  Your email is safe with us — we never sell or share your info.
+                </p>
               </div>
             )}
 
