@@ -35,7 +35,7 @@ const styles = {
   cyan: "#22d3ee",
   textPrimary: "#fafafa",
   textSecondary: "#a1a1aa",
-  cardRadius: "2.5rem",
+  cardRadius: "1.875rem",
 }
 
 export interface CalculatorProps { initialYear?: string; initialMake?: string; initialModel?: string; initialTrim?: string; }
@@ -278,7 +278,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
           <CardHeader
             style={{
               borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
-              padding: "1rem clamp(0.875rem, 3vw, 2rem)",
+              padding: "0.625rem clamp(0.875rem, 3vw, 2rem)",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", minWidth: 0 }}>
