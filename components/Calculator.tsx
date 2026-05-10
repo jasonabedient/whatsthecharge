@@ -191,36 +191,36 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
       {/* Header */}
       <header
         style={{
-          padding: "1.25rem clamp(1rem, 3vw, 2rem)",
+          padding: "1rem clamp(0.75rem, 3vw, 2rem)",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
         }}
       >
-        <div style={{ width: "60px" }} />
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: "0.5rem",
+            minWidth: 0,
           }}
         >
           <Zap
-            size={28}
-            style={{ color: styles.cyan }}
+            size={24}
+            style={{ color: styles.cyan, flexShrink: 0 }}
           />
           <span
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.05rem, 4vw, 1.5rem)",
               fontWeight: 700,
               letterSpacing: "-0.025em",
+              whiteSpace: "nowrap",
             }}
           >
             EV Charging Calculator
           </span>
         </div>
-        <div style={{ width: "60px" }} />
       </header>
 
       {/* Hero Section */}
@@ -278,16 +278,18 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
           <CardHeader
             style={{
               borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
-              padding: "1.25rem clamp(1rem, 3vw, 2rem)",
+              padding: "1rem clamp(0.875rem, 3vw, 2rem)",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <Plug size={24} style={{ color: styles.cyan }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", minWidth: 0 }}>
+              <Plug size={22} style={{ color: styles.cyan, flexShrink: 0 }} />
               <CardTitle
                 style={{
                   color: styles.textPrimary,
-                  fontSize: "1.5rem",
+                  fontSize: "clamp(1.05rem, 4.2vw, 1.5rem)",
                   fontWeight: 700,
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.01em",
                 }}
               >
                 Charging Cost Calculator
