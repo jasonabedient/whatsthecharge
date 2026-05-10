@@ -10,6 +10,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { evData } from "@/lib/ev-data"
+import { stateRates, getRateByCode } from "@/lib/rates-data"
 
 // Charger presets in kW
 const chargerPresets = [
@@ -18,11 +19,11 @@ const chargerPresets = [
   { label: "11.5 kW (Level 2 - 48A)", value: 11.5 },
 ]
 
-// TOU rate multipliers
-const touRates = [
-  { label: "Anytime (100%)", value: 1.0 },
-  { label: "Off-Peak (65%)", value: 0.65 },
-  { label: "Peak (140%)", value: 1.4 },
+// TOU mode — selects which rate column to pull from the state's rates
+const touModes = [
+  { label: "Standard", value: "standard" },
+  { label: "Off-Peak / Overnight", value: "offpeak" },
+  { label: "Peak", value: "peak" },
 ]
 
 // Charging efficiency
@@ -52,8 +53,10 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
   const [chargerPower, setChargerPower] = useState<number>(5.8)
   const [chargerSelection, setChargerSelection] = useState<string>("5.8")
   const [customChargerPower, setCustomChargerPower] = useState<string>("")
-  const [touRate, setTouRate] = useState<number>(1.0)
-  const [electricityRate, setElectricityRate] = useState<string>("0.12")
+  const [touMode, setTouMode] = useState<string>("standard")
+  const [stateCode, setStateCode] = useState<string>("CA")
+  const [electricityRate, setElectricityRate] = useState<string>("0.320")
+  const [rateOverridden, setRateOverridden] = useState<boolean>(false)
   const [batteryPercent, setBatteryPercent] = useState<string>("20")
   const [targetPercent, setTargetPercent] = useState<string>("80")
   const [email, setEmail] = useState<string>("")
@@ -77,6 +80,18 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
   // Get battery capacity
   const batteryCapacity = year && make && trim ? evData[year]?.[make]?.[trim] : null
 
+  // Auto-update electricity rate when state or TOU mode changes (unless user manually overrode)
+  useEffect(() => {
+    if (rateOverridden) return
+    const r = getRateByCode(stateCode)
+    if (!r) return
+    let newRate: number
+    if (touMode === "offpeak") newRate = r.offPeakRate
+    else if (touMode === "peak") newRate = r.peakRate
+    else newRate = r.standardRate
+    setElectricityRate(newRate.toFixed(3))
+  }, [stateCode, touMode, rateOverridden])
+
   // Calculate charging metrics
   const calculateCharging = () => {
     if (!batteryCapacity) return null
@@ -90,7 +105,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
     const energyNeeded = batteryCapacity * (endPercent - startPercent)
     const actualEnergyNeeded = energyNeeded / CHARGING_EFFICIENCY
     const chargingTime = actualEnergyNeeded / chargerPower
-    const cost = actualEnergyNeeded * rate * touRate
+    const cost = actualEnergyNeeded * rate
 
     return {
       energyNeeded: actualEnergyNeeded.toFixed(1),
@@ -304,11 +319,13 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     <SelectValue placeholder="Select year" />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.keys(evData).map((y) => (
-                      <SelectItem key={y} value={y}>
-                        {y}
-                      </SelectItem>
-                    ))}
+                    {Object.keys(evData)
+                      .sort((a, b) => Number(b) - Number(a))
+                      .map((y) => (
+                        <SelectItem key={y} value={y}>
+                          {y}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -515,43 +532,13 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     display: "block",
                   }}
                 >
-                  Electricity Rate ($/kWh)
-                </Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={electricityRate}
-                  onChange={(e) => {
-                    setElectricityRate(e.target.value)
-                    markInputsChanged()
-                  }}
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(34, 211, 238, 0.2)",
-                    borderRadius: "0.75rem",
-                    color: styles.textPrimary,
-                  }}
-                />
-              </div>
-
-              <div>
-                <Label
-                  style={{
-                    color: styles.textSecondary,
-                    fontSize: "0.75rem",
-                    fontWeight: 600,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    marginBottom: "0.5rem",
-                    display: "block",
-                  }}
-                >
-                  TOU Rate
+                  State
                 </Label>
                 <Select
-                  value={touRate.toString()}
+                  value={stateCode}
                   onValueChange={(v) => {
-                    setTouRate(parseFloat(v))
+                    setStateCode(v)
+                    setRateOverridden(false)
                     markInputsChanged()
                   }}
                 >
@@ -566,13 +553,87 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {touRates.map((rate) => (
-                      <SelectItem key={rate.value} value={rate.value.toString()}>
-                        {rate.label}
+                    {stateRates.map((r) => (
+                      <SelectItem key={r.stateCode} value={r.stateCode}>
+                        {r.state}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Rate Plan
+                </Label>
+                <Select
+                  value={touMode}
+                  onValueChange={(v) => {
+                    setTouMode(v)
+                    setRateOverridden(false)
+                    markInputsChanged()
+                  }}
+                >
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {touModes.map((m) => (
+                      <SelectItem key={m.value} value={m.value}>
+                        {m.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
+                  Electricity Rate ($/kWh)
+                </Label>
+                <Input
+                  type="number"
+                  step="0.001"
+                  value={electricityRate}
+                  onChange={(e) => {
+                    setElectricityRate(e.target.value)
+                    setRateOverridden(true)
+                    markInputsChanged()
+                  }}
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
+                    borderRadius: "0.75rem",
+                    color: styles.textPrimary,
+                  }}
+                />
                 <p
                   style={{
                     fontSize: "0.75rem",
@@ -580,7 +641,9 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     marginTop: "0.5rem",
                   }}
                 >
-                  Effective rate: ${(parseFloat(electricityRate) * touRate).toFixed(3)}/kWh
+                  {rateOverridden
+                    ? "Custom rate (edit cleared by changing state or plan)"
+                    : `Auto-set from ${getRateByCode(stateCode)?.state ?? stateCode} — ${touMode === "offpeak" ? "Off-Peak" : touMode === "peak" ? "Peak" : "Standard"}`}
                 </p>
               </div>
             </div>
