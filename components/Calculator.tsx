@@ -191,7 +191,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
       {/* Header */}
       <header
         style={{
-          padding: "1.5rem 2rem",
+          padding: "1.25rem clamp(1rem, 3vw, 2rem)",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -227,7 +227,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
       <section
         style={{
           textAlign: "center",
-          padding: "4rem 2rem 3rem",
+          padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem) clamp(1.5rem, 4vw, 3rem)",
           maxWidth: "800px",
           margin: "0 auto",
         }}
@@ -261,7 +261,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
       {/* Calculator Card */}
       <section
         style={{
-          padding: "0 2rem 4rem",
+          padding: "0 clamp(0.75rem, 3vw, 2rem) clamp(2rem, 5vw, 4rem)",
           maxWidth: "900px",
           margin: "0 auto",
         }}
@@ -278,7 +278,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
           <CardHeader
             style={{
               borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
-              padding: "1.25rem 2rem",
+              padding: "1.25rem clamp(1rem, 3vw, 2rem)",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -295,7 +295,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
             </div>
           </CardHeader>
 
-          <CardContent style={{ padding: "1.5rem 2rem 2rem" }}>
+          <CardContent style={{ padding: "1.25rem clamp(1rem, 3vw, 2rem) 1.5rem" }}>
             {/* Vehicle Selection */}
             <div
               style={{
@@ -795,7 +795,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                   backgroundColor: "rgba(34, 211, 238, 0.05)",
                   border: "1px solid rgba(34, 211, 238, 0.2)",
                   borderRadius: "1.5rem",
-                  padding: "2rem",
+                  padding: "clamp(1.25rem, 4vw, 2rem)",
                   marginBottom: "2rem",
                   textAlign: "center",
                 }}
@@ -880,7 +880,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                   backgroundColor: "rgba(34, 211, 238, 0.05)",
                   border: "1px solid rgba(34, 211, 238, 0.2)",
                   borderRadius: "1.5rem",
-                  padding: "2rem",
+                  padding: "clamp(1rem, 3vw, 2rem)",
                   marginBottom: "2rem",
                 }}
               >
@@ -899,11 +899,11 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: "1.5rem",
+                    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                    gap: "clamp(0.5rem, 2vw, 1.5rem)",
                   }}
                 >
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center", minWidth: 0 }}>
                     <div
                       style={{
                         width: "48px",
@@ -920,10 +920,12 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                     </div>
                     <p
                       style={{
-                        fontSize: "1.75rem",
+                        fontSize: "clamp(1.25rem, 5vw, 1.75rem)",
                         fontWeight: 700,
                         color: styles.cyan,
                         marginBottom: "0.25rem",
+                        wordBreak: "break-word",
+                        lineHeight: 1.1,
                       }}
                     >
                       {calculatedResults.energyNeeded}
@@ -940,7 +942,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                     </p>
                   </div>
 
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center", minWidth: 0 }}>
                     <div
                       style={{
                         width: "48px",
@@ -957,10 +959,12 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                     </div>
                     <p
                       style={{
-                        fontSize: "1.75rem",
+                        fontSize: "clamp(1.25rem, 5vw, 1.75rem)",
                         fontWeight: 700,
                         color: styles.cyan,
                         marginBottom: "0.25rem",
+                        wordBreak: "break-word",
+                        lineHeight: 1.1,
                       }}
                     >
                       {calculatedResults.chargingTime}
@@ -977,7 +981,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                     </p>
                   </div>
 
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: "center", minWidth: 0 }}>
                     <div
                       style={{
                         width: "48px",
@@ -994,10 +998,12 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                     </div>
                     <p
                       style={{
-                        fontSize: "1.75rem",
+                        fontSize: "clamp(1.25rem, 5vw, 1.75rem)",
                         fontWeight: 700,
                         color: styles.cyan,
                         marginBottom: "0.25rem",
+                        wordBreak: "break-word",
+                        lineHeight: 1.1,
                       }}
                     >
                       ${calculatedResults.cost}
