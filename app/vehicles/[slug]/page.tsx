@@ -61,7 +61,7 @@ export default async function VehiclePage({ params }: { params: Promise<{ slug: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJSON) }}
       />
-      <Calculator initialYear={vehicle.year} initialMake={vehicle.makeModel} />
+      <Calculator initialYear={vehicle.year} initialMake={vehicle.make} initialModel={vehicle.model} />
     </>
   )
 }

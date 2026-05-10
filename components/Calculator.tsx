@@ -38,18 +38,20 @@ const styles = {
   cardRadius: "2.5rem",
 }
 
-export interface CalculatorProps { initialYear?: string; initialMake?: string; initialTrim?: string; }
+export interface CalculatorProps { initialYear?: string; initialMake?: string; initialModel?: string; initialTrim?: string; }
 
-export function Calculator({ initialYear = "", initialMake = "", initialTrim = "" }: CalculatorProps) {
+export function Calculator({ initialYear = "", initialMake = "", initialModel = "", initialTrim = "" }: CalculatorProps) {
   const [year, setYear] = useState<string>(initialYear)
   const [make, setMake] = useState<string>(initialMake)
+  const [model, setModel] = useState<string>(initialModel)
   const [trim, setTrim] = useState<string>(initialTrim)
 
   useEffect(() => {
     if (initialYear) setYear(initialYear)
     if (initialMake) setMake(initialMake)
+    if (initialModel) setModel(initialModel)
     if (initialTrim) setTrim(initialTrim)
-  }, [initialYear, initialMake, initialTrim])
+  }, [initialYear, initialMake, initialModel, initialTrim])
   const [chargerPower, setChargerPower] = useState<number>(5.8)
   const [chargerSelection, setChargerSelection] = useState<string>("5.8")
   const [customChargerPower, setCustomChargerPower] = useState<string>("")
@@ -74,11 +76,14 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
   // Get available makes for selected year
   const availableMakes = year ? Object.keys(evData[year] || {}) : []
 
-  // Get available trims for selected make
-  const availableTrims = year && make ? Object.keys(evData[year]?.[make] || {}) : []
+  // Get available models for selected make
+  const availableModels = year && make ? Object.keys(evData[year]?.[make] || {}) : []
+
+  // Get available trims for selected model
+  const availableTrims = year && make && model ? Object.keys(evData[year]?.[make]?.[model] || {}) : []
 
   // Get battery capacity
-  const batteryCapacity = year && make && trim ? evData[year]?.[make]?.[trim] : null
+  const batteryCapacity = year && make && model && trim ? evData[year]?.[make]?.[model]?.[trim] : null
 
   // Auto-update electricity rate when state or TOU mode changes (unless user manually overrode)
   useEffect(() => {
@@ -158,11 +163,18 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
   const handleYearChange = (value: string) => {
     setYear(value)
     setMake("")
+    setModel("")
     setTrim("")
   }
 
   const handleMakeChange = (value: string) => {
     setMake(value)
+    setModel("")
+    setTrim("")
+  }
+
+  const handleModelChange = (value: string) => {
+    setModel(value)
     setTrim("")
   }
 
@@ -342,7 +354,7 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     display: "block",
                   }}
                 >
-                  Make / Model
+                  Make
                 </Label>
                 <Select value={make} onValueChange={handleMakeChange} disabled={!year}>
                   <SelectTrigger
@@ -377,9 +389,44 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     display: "block",
                   }}
                 >
+                  Model
+                </Label>
+                <Select value={model} onValueChange={handleModelChange} disabled={!make}>
+                  <SelectTrigger
+                    style={{
+                      backgroundColor: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                      borderRadius: "0.75rem",
+                      color: styles.textPrimary,
+                    }}
+                  >
+                    <SelectValue placeholder="Select model" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableModels.map((m) => (
+                      <SelectItem key={m} value={m}>
+                        {m}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label
+                  style={{
+                    color: styles.textSecondary,
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Trim
                 </Label>
-                <Select value={trim} onValueChange={setTrim} disabled={!make}>
+                <Select value={trim} onValueChange={setTrim} disabled={!model}>
                   <SelectTrigger
                     style={{
                       backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -777,7 +824,8 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                   onSubmit={handleEmailSubmit}
                   style={{
                     display: "flex",
-                    gap: "1rem",
+                    flexWrap: "wrap",
+                    gap: "0.75rem",
                     maxWidth: "400px",
                     margin: "0 auto",
                   }}
@@ -789,7 +837,9 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     style={{
-                      flex: 1,
+                      flex: "1 1 200px",
+                      minWidth: 0,
+                      width: "100%",
                       backgroundColor: "rgba(255, 255, 255, 0.05)",
                       border: "1px solid rgba(34, 211, 238, 0.2)",
                       borderRadius: "0.75rem",
@@ -799,11 +849,13 @@ export function Calculator({ initialYear = "", initialMake = "", initialTrim = "
                   <Button
                     type="submit"
                     style={{
+                      flex: "1 1 auto",
                       backgroundColor: styles.cyan,
                       color: styles.background,
                       borderRadius: "0.75rem",
                       fontWeight: 600,
-                      padding: "0 1.5rem",
+                      padding: "0.75rem 1.5rem",
+                      whiteSpace: "nowrap",
                     }}
                   >
                     See Results
