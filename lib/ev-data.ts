@@ -1,4 +1,4 @@
-// EV Battery Data — auto-generated from Notion (416 entries)
+// EV Battery Data — auto-generated from Notion (447 entries)
 // Source: https://www.notion.so/645929b6e97442d4930f8a929cf34350
 // Structure: year -> make -> model -> trim -> capacity (kWh)
 export const evData: Record<string, Record<string, Record<string, Record<string, number>>>> = {
@@ -18,8 +18,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Sportback 55 quattro": 82,
       },
       "Q6 e-tron": {
-        "Premium quattro": 100,
         "Premium Plus quattro": 100,
+        "Premium quattro": 100,
         "Prestige quattro": 100,
       },
       "SQ6 e-tron": {
@@ -28,35 +28,35 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "BMW": {
       "i4": {
-        "eDrive40": 84.3,
         "M50 xDrive": 84.3,
+        "eDrive40": 84.3,
       },
       "i5": {
+        "M60 xDrive": 84,
         "eDrive40": 84,
         "xDrive40": 84,
-        "M60 xDrive": 84,
       },
       "iX": {
+        "M70 xDrive": 111,
         "xDrive40": 100,
         "xDrive45": 109,
         "xDrive50": 111,
         "xDrive60": 111,
-        "M70 xDrive": 111,
       },
     },
     "Cadillac": {
       "Lyriq": {
-        "Tech RWD": 102,
         "Luxury": 102,
-        "Sport": 102,
         "Premium Luxury": 102,
         "Premium Sport": 102,
+        "Sport": 102,
+        "Tech RWD": 102,
       },
       "Optiq": {
         "Luxury": 85,
-        "Sport": 85,
         "Premium Luxury": 85,
         "Premium Sport": 85,
+        "Sport": 85,
       },
       "Optiq-V": {
         "Standard": 85,
@@ -65,38 +65,38 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     "Chevrolet": {
       "Blazer EV": {
         "LT": 85,
-        "RS RWD": 85,
         "RS AWD": 102,
+        "RS RWD": 85,
         "SS": 102,
       },
       "Equinox EV": {
-        "LT FWD": 85,
         "LT AWD": 85,
-        "RS FWD": 85,
+        "LT FWD": 85,
         "RS AWD": 85,
+        "RS FWD": 85,
       },
       "Silverado EV": {
-        "Work Truck": 200,
-        "LT Standard Range": 170,
         "LT Extended Range": 200,
+        "LT Standard Range": 170,
         "RST": 205,
+        "Work Truck": 200,
       },
     },
     "Ford": {
       "F-150 Lightning": {
-        "Pro Standard Range": 98,
-        "XLT Standard Range": 98,
-        "XLT Extended Range": 131,
+        "Flash": 131,
         "Lariat Extended Range": 131,
         "Platinum": 131,
-        "Flash": 131,
+        "Pro Standard Range": 98,
+        "XLT Extended Range": 131,
+        "XLT Standard Range": 98,
       },
       "Mustang Mach-E": {
-        "Select": 73,
+        "GT": 91,
         "Premium": 73,
         "Premium Extended Range": 88,
-        "GT": 91,
         "Rally": 91,
+        "Select": 73,
       },
     },
     "GMC": {
@@ -109,9 +109,9 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "3X": 205,
       },
       "Sierra EV": {
-        "Elevation Standard Range": 170,
-        "Elevation Extended Range": 205,
         "Denali": 205,
+        "Elevation Extended Range": 205,
+        "Elevation Standard Range": 170,
       },
     },
     "Genesis": {
@@ -123,66 +123,66 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Prestige": 84,
       },
       "GV60": {
-        "Standard": 84,
         "Advanced": 84,
         "Performance": 84,
+        "Standard": 84,
       },
     },
     "Honda": {
       "Prologue": {
         "EX FWD": 85,
-        "Touring AWD": 85,
         "Elite AWD": 85,
+        "Touring AWD": 85,
       },
     },
     "Hyundai": {
       "Ioniq 5": {
-        "SE Standard Range": 63,
-        "SE": 84,
-        "SEL": 84,
         "Limited": 84,
-        "XRT": 84,
         "N": 84,
+        "SE": 84,
+        "SE Standard Range": 63,
+        "SEL": 84,
+        "XRT": 84,
       },
       "Ioniq 6": {
-        "SE Standard Range": 53,
-        "SE": 77.4,
-        "SEL": 77.4,
         "Limited": 77.4,
+        "SE": 77.4,
+        "SE Standard Range": 53,
+        "SEL": 77.4,
       },
       "Ioniq 9": {
+        "Calligraphy": 110.3,
+        "Limited": 110.3,
         "SE": 110.3,
         "SEL": 110.3,
-        "Limited": 110.3,
-        "Calligraphy": 110.3,
       },
     },
     "Kia": {
       "EV6": {
-        "Light Standard Range": 63,
-        "Light Long Range": 84,
-        "Wind": 84,
-        "GT-Line": 84,
         "GT": 84,
+        "GT-Line": 84,
+        "Light Long Range": 84,
+        "Light Standard Range": 63,
+        "Wind": 84,
       },
       "EV9": {
-        "Light Standard Range": 73,
-        "Light Long Range": 96,
-        "Wind": 96,
-        "Land": 96,
         "GT-Line": 96,
+        "Land": 96,
+        "Light Long Range": 96,
+        "Light Standard Range": 73,
+        "Wind": 96,
       },
     },
     "Lucid": {
       "Air": {
-        "Pure RWD": 88,
-        "Touring AWD": 96,
         "Grand Touring AWD": 112,
+        "Pure RWD": 88,
         "Sapphire": 118,
+        "Touring AWD": 96,
       },
       "Gravity": {
-        "Touring": 89,
         "Grand Touring": 123,
+        "Touring": 89,
       },
     },
     "Mercedes-Benz": {
@@ -207,26 +207,26 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Nissan": {
       "Ariya": {
+        "Empower+": 87,
         "Engage Standard Range": 63,
         "Engage+ Long Range": 87,
         "Evolve+": 87,
-        "Empower+": 87,
         "Platinum+": 87,
       },
       "LEAF": {
+        "Platinum+": 72,
         "S": 72,
         "SV": 72,
-        "Platinum+": 72,
       },
     },
     "Polestar": {
       "2": {
-        "Long Range Single Motor": 79,
         "Long Range Dual Motor": 79,
+        "Long Range Single Motor": 79,
       },
       "3": {
-        "Long Range Single Motor": 107,
         "Long Range Dual Motor": 111,
+        "Long Range Single Motor": 107,
         "Performance": 111,
       },
     },
@@ -237,58 +237,58 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Macan Turbo": 100,
       },
       "Taycan": {
-        "RWD": 89,
         "4S": 105,
+        "RWD": 89,
         "Turbo": 105,
         "Turbo S": 105,
       },
     },
     "Rivian": {
       "R1S": {
+        "Dual Large": 131,
         "Dual Standard": 106,
         "Dual Standard+": 121,
-        "Dual Large": 131,
-        "Tri Max": 141,
         "Quad Max": 141,
+        "Tri Max": 141,
       },
       "R1T": {
+        "Dual Large": 131,
         "Dual Standard": 106,
         "Dual Standard+": 121,
-        "Dual Large": 131,
-        "Tri Max": 141,
         "Quad Max": 141,
+        "Tri Max": 141,
       },
     },
     "Subaru": {
       "Solterra": {
-        "Premium": 74.7,
         "Limited": 74.7,
+        "Premium": 74.7,
         "Touring": 74.7,
       },
     },
     "Tesla": {
       "Model 3": {
-        "RWD": 57.5,
         "Long Range AWD": 78.4,
+        "RWD": 57.5,
       },
       "Model S": {
-        "Plaid AWD": 95,
         "Long Range AWD": 95,
+        "Plaid AWD": 95,
       },
       "Model X": {
-        "Plaid AWD": 95,
         "Long Range AWD": 95,
+        "Plaid AWD": 95,
       },
       "Model Y": {
-        "Performance AWD": 75,
         "Long Range AWD": 75,
+        "Performance AWD": 75,
       },
     },
     "Toyota": {
       "bZ": {
-        "XLE FWD": 74.7,
-        "XLE AWD": 74.7,
         "Limited AWD": 74.7,
+        "XLE AWD": 74.7,
+        "XLE FWD": 74.7,
       },
     },
     "Volkswagen": {
@@ -297,10 +297,10 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Pro S Plus 4MOTION": 91,
       },
       "ID.4": {
-        "Standard": 62,
         "Pro": 82,
-        "Pro S": 82,
         "Pro AWD": 82,
+        "Pro S": 82,
+        "Standard": 62,
       },
     },
     "Volvo": {
@@ -424,8 +424,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "M50 xDrive": 83.9,
       },
       "i5": {
-        "eDrive40": 84.3,
         "M60 xDrive": 84.3,
+        "eDrive40": 84.3,
       },
       "i7": {
         "M70 xDrive": 105.7,
@@ -450,8 +450,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "2LT FWD": 85,
       },
       "Silverado EV": {
-        "Work Truck": 200,
         "RST": 200,
+        "Work Truck": 200,
       },
     },
     "Fiat": {
@@ -507,8 +507,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Wind RWD": 77.4,
       },
       "EV9": {
-        "Light RWD": 76.1,
         "GT-Line AWD": 99.8,
+        "Light RWD": 76.1,
       },
       "Niro EV": {
         "Wind": 64.8,
@@ -560,9 +560,25 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     "Rivian": {
       "R1S": {
         "Adventure Max Pack": 149,
+        "Dual Motor Large Pack": 135,
+        "Dual Motor Max Pack": 149,
+        "Dual Motor Standard Pack": 106,
+        "Dual Motor Standard+ Pack": 121,
+        "Performance Dual Motor Large Pack": 135,
+        "Performance Dual Motor Max Pack": 149,
+        "Performance Dual Motor Standard+ Pack": 121,
+        "Quad Motor Large Pack": 135,
       },
       "R1T": {
+        "Dual Motor Large Pack": 135,
+        "Dual Motor Max Pack": 149,
+        "Dual Motor Standard Pack": 106,
+        "Dual Motor Standard+ Pack": 121,
         "Performance Dual Motor": 135,
+        "Performance Dual Motor Large Pack": 135,
+        "Performance Dual Motor Max Pack": 149,
+        "Performance Dual Motor Standard+ Pack": 121,
+        "Quad Motor Large Pack": 135,
       },
     },
     "Subaru": {
@@ -677,8 +693,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "SEL AWD": 77.4,
       },
       "Ioniq 6": {
-        "SE Standard Range": 53,
         "Limited AWD": 77.4,
+        "SE Standard Range": 53,
       },
       "Kona Electric": {
         "SEL": 64,
@@ -699,8 +715,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Lucid": {
       "Air": {
-        "Touring": 92,
         "Pure": 88,
+        "Touring": 92,
       },
     },
     "MINI": {
@@ -728,8 +744,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Nissan": {
       "Ariya": {
-        "Venture+": 87,
         "Platinum+ e-4ORCE": 87,
+        "Venture+": 87,
       },
       "LEAF": {
         "SV Plus": 62,
@@ -751,9 +767,18 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     "Rivian": {
       "R1S": {
         "Adventure Dual Motor Large Pack": 135,
+        "Dual Motor Large Pack": 135,
+        "Dual Motor Max Pack": 149,
+        "Performance Dual Motor Large Pack": 135,
+        "Performance Dual Motor Max Pack": 149,
+        "Quad Motor Large Pack": 135,
       },
       "R1T": {
-        "Adventure Quad Motor Max Pack": 180,
+        "Dual Motor Large Pack": 135,
+        "Dual Motor Max Pack": 149,
+        "Performance Dual Motor Large Pack": 135,
+        "Performance Dual Motor Max Pack": 149,
+        "Quad Motor Large Pack": 135,
       },
     },
     "Subaru": {
@@ -808,8 +833,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "BMW": {
       "i4": {
-        "eDrive40": 83.9,
         "M50 xDrive": 83.9,
+        "eDrive40": 83.9,
       },
       "iX": {
         "xDrive50": 111.5,
@@ -828,8 +853,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Cargo Van": 68,
       },
       "F-150 Lightning": {
-        "Pro Standard Range": 98,
         "Platinum Extended Range": 131,
+        "Pro Standard Range": 98,
       },
       "Mustang Mach-E": {
         "California Route 1": 88,
@@ -842,8 +867,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Hyundai": {
       "Ioniq 5": {
-        "SE Standard Range RWD": 58,
         "Limited AWD": 77.4,
+        "SE Standard Range RWD": 58,
       },
       "Kona Electric": {
         "Limited": 64,
@@ -905,11 +930,17 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Rivian": {
       "R1S": {
+        "Dual Motor Large Pack": 135,
         "Launch Edition Quad Motor": 135,
+        "Performance Dual Motor Large Pack": 135,
+        "Quad Motor Large Pack": 135,
       },
       "R1T": {
-        "Launch Edition Quad Motor": 135,
         "Adventure Dual Motor Large Pack": 135,
+        "Dual Motor Large Pack": 135,
+        "Launch Edition Quad Motor": 135,
+        "Performance Dual Motor Large Pack": 135,
+        "Quad Motor Large Pack": 135,
       },
     },
     "Tesla": {
@@ -961,9 +992,9 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Ford": {
       "Mustang Mach-E": {
-        "Select RWD": 68,
-        "Premium AWD Extended Range": 88,
         "GT": 88,
+        "Premium AWD Extended Range": 88,
+        "Select RWD": 68,
       },
     },
     "Hyundai": {
@@ -1089,8 +1120,8 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
     "Porsche": {
       "Taycan": {
-        "Turbo S": 93.4,
         "4S": 79.2,
+        "Turbo S": 93.4,
       },
     },
     "Tesla": {
@@ -1291,12 +1322,12 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
         "Long Range RWD": 75,
       },
       "Model S": {
-        "75D": 75,
         "100D": 100,
+        "75D": 75,
       },
       "Model X": {
-        "75D": 75,
         "100D": 100,
+        "75D": 75,
       },
     },
     "Volkswagen": {
