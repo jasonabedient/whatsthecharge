@@ -150,13 +150,45 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
   // Button shows "Calculate" only on first use, then permanently "Recalculate" after first results
   const buttonText = emailSubmitted ? "Recalculate" : "Calculate"
 
-  const handleEmailSubmit = (e: FormEvent) => {
+  const handleEmailSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (email) {
-      console.log("[v0] Lead captured:", { email, vehicle: `${year} ${make} ${trim}`, results: calculatedResults })
-      setEmailSubmitted(true)
-      setShowEmailPrompt(false)
-      setShowResults(true)
+    if (!email) return
+
+    // Optimistically show results so UX isn't gated by network
+    setEmailSubmitted(true)
+    setShowEmailPrompt(false)
+    setShowResults(true)
+
+    try {
+      const rateNum = Number.parseFloat(electricityRate)
+      const costNum = calculatedResults
+        ? Number.parseFloat(calculatedResults.cost.replace(/[^0-9.]/g, ""))
+        : null
+      const energyNum = calculatedResults
+        ? Number.parseFloat(calculatedResults.energyNeeded)
+        : null
+      const hoursNum = calculatedResults
+        ? Number.parseFloat(calculatedResults.chargingTime)
+        : null
+
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          vehicle: [year, make, model, trim].filter(Boolean).join(" "),
+          batteryKwh: batteryCapacity ?? null,
+          state: stateCode,
+          ratePlan: touMode,
+          electricityRate: Number.isFinite(rateNum) ? rateNum : null,
+          estCost: costNum,
+          kwhNeeded: energyNum,
+          hours: hoursNum,
+        }),
+      })
+    } catch (err) {
+      // Swallow — UI already optimistic; lead is non-critical to user flow
+      console.error("Lead submit failed", err)
     }
   }
 
