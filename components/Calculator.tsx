@@ -29,6 +29,30 @@ const touModes = [
 // Charging efficiency
 const CHARGING_EFFICIENCY = 0.9
 
+// DC Fast charging networks — real-world average kW during a 10-80% session
+// (peak speeds are higher but tapering means real throughput is lower).
+// Prices are typical 2026 U.S. averages; actual rates vary by station and membership.
+const fastChargers = [
+  {
+    name: "Tesla Supercharger",
+    avgKw: 150,
+    pricePerKwh: 0.40,
+    description: "V3 / V4, ~250 kW peak",
+  },
+  {
+    name: "Electrify America",
+    avgKw: 175,
+    pricePerKwh: 0.56,
+    description: "Hyper-Fast, up to 350 kW peak",
+  },
+  {
+    name: "EVgo Fast",
+    avgKw: 150,
+    pricePerKwh: 0.50,
+    description: "Up to 350 kW peak",
+  },
+] as const
+
 // Styling constants
 const styles = {
   background: "#09090b",
@@ -1054,6 +1078,145 @@ export function Calculator({ initialYear = "", initialMake = "", initialModel = 
                     </p>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* Fast Charging Comparison */}
+            {showResults && calculatedResults && (
+              <div
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.02)",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "1.5rem",
+                  padding: "clamp(1rem, 3vw, 2rem)",
+                  marginBottom: "2rem",
+                }}
+              >
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <h3
+                    style={{
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: styles.textSecondary,
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    Compare to Fast Charging
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "0.8125rem",
+                      color: styles.textSecondary,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    Same charge at a DC fast charger on the road. Real-world average speeds shown—peak rates are higher but taper.
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                    gap: "clamp(0.75rem, 2vw, 1rem)",
+                  }}
+                >
+                  {fastChargers.map((charger) => {
+                    const energyKwh = parseFloat(calculatedResults.energyNeeded)
+                    if (!Number.isFinite(energyKwh) || energyKwh <= 0) return null
+                    const hours = energyKwh / charger.avgKw
+                    const minutes = Math.round(hours * 60)
+                    const cost = energyKwh * charger.pricePerKwh
+                    const homeCost = parseFloat(calculatedResults.cost)
+                    const multiple = Number.isFinite(homeCost) && homeCost > 0 ? (cost / homeCost).toFixed(1) : null
+                    return (
+                      <div
+                        key={charger.name}
+                        style={{
+                          backgroundColor: "rgba(34, 211, 238, 0.04)",
+                          border: "1px solid rgba(34, 211, 238, 0.15)",
+                          borderRadius: "1rem",
+                          padding: "clamp(0.875rem, 2.5vw, 1.25rem)",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.625rem",
+                          minWidth: 0,
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: "0.9375rem",
+                            fontWeight: 600,
+                            color: styles.textPrimary,
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {charger.name}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.6875rem",
+                            color: styles.textSecondary,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                          }}
+                        >
+                          {charger.description}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "baseline",
+                            gap: "0.5rem",
+                            marginTop: "0.25rem",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "clamp(1.125rem, 4vw, 1.5rem)",
+                              fontWeight: 700,
+                              color: styles.cyan,
+                            }}
+                          >
+                            ${cost.toFixed(2)}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "0.8125rem",
+                              color: styles.textSecondary,
+                            }}
+                          >
+                            {minutes < 60 ? `~${minutes} min` : `~${hours.toFixed(1)} hr`}
+                          </span>
+                        </div>
+                        {multiple && (
+                          <div
+                            style={{
+                              fontSize: "0.75rem",
+                              color: styles.textSecondary,
+                              borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+                              paddingTop: "0.5rem",
+                            }}
+                          >
+                            <span style={{ color: styles.cyan, fontWeight: 600 }}>{multiple}×</span> the cost of charging at home
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+                <p
+                  style={{
+                    fontSize: "0.6875rem",
+                    color: styles.textSecondary,
+                    marginTop: "1rem",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Estimates use 2026 U.S. average pricing. Actual rates vary by station, time, and membership.
+                </p>
               </div>
             )}
 
