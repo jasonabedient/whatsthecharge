@@ -86,11 +86,11 @@ export function SiteHeader() {
                 Calculator
               </Link>
               <Link
-                href="/blog"
+                href="/learn"
                 onClick={() => setOpen(false)}
                 className="rounded-md px-2 py-2 text-foreground transition-colors hover:bg-accent"
               >
-                Blog
+                Learn
               </Link>
             </nav>
 

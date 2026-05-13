@@ -7,6 +7,8 @@ published: 2026-05-12
 updated: 2026-05-12
 youtubeId: Wp7OprE7Txk
 author: Jason at What's The Charge
+category: FIELD TEST
+categoryIcon: 🔌
 ---
 
 If you're buying an EV in 2026, you've been told to focus on range and home charging. Both are misleading. The number that actually controls your day is **range per hour** — how many driving miles your charger puts back into the battery every hour it's plugged in. I learned this the hard way after upgrading from a Hyundai Ioniq 6 to a Rivian, then test-driving a Silverado EV. Below are the real numbers.

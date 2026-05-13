@@ -14,6 +14,9 @@ export type BlogPostMeta = {
   youtubeId?: string
   hero?: string
   author?: string
+  category?: string
+  categoryIcon?: string
+  readMinutes?: number
 }
 
 export type BlogPost = BlogPostMeta & {
@@ -44,8 +47,32 @@ export function getAllBlogPosts(): BlogPostMeta[] {
       youtubeId: data.youtubeId || '',
       hero: data.hero || '',
       author: data.author || "Jason at What's The Charge",
+      category: data.category || 'GUIDE',
+      categoryIcon: data.categoryIcon || '⚡',
+      readMinutes: data.readMinutes || estimateReadMinutes(readAllRaw(data.slug || filename)),
     }))
     .sort((a, b) => (a.published < b.published ? 1 : -1))
+}
+
+function estimateReadMinutes(content: string): number {
+  if (!content) return 5
+  const words = content.trim().split(/\s+/).length
+  return Math.max(3, Math.round(words / 220))
+}
+
+function readAllRaw(slugOrFilename: string): string {
+  try {
+    const all = readAll()
+    const match = all.find(
+      ({ filename, data }) =>
+        data.slug === slugOrFilename ||
+        filename.replace(/\.(md|mdx)$/, '') === slugOrFilename ||
+        filename === slugOrFilename,
+    )
+    return match?.content || ''
+  } catch {
+    return ''
+  }
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | null {
@@ -65,6 +92,9 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
     youtubeId: match.data.youtubeId || '',
     hero: match.data.hero || '',
     author: match.data.author || "Jason at What's The Charge",
+    category: match.data.category || 'GUIDE',
+    categoryIcon: match.data.categoryIcon || '⚡',
+    readMinutes: match.data.readMinutes || estimateReadMinutes(match.content),
     content: match.content,
   }
 }

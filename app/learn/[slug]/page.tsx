@@ -21,7 +21,7 @@ export async function generateMetadata({
   const post = getBlogPostBySlug(slug)
   if (!post) return { title: 'Post Not Found' }
 
-  const url = `https://whatsthecharge.com/blog/${post.slug}`
+  const url = `https://whatsthecharge.com/learn/${post.slug}`
   return {
     title: post.title,
     description: post.description,
@@ -62,7 +62,7 @@ export default async function BlogPostPage({
   const post = getBlogPostBySlug(slug)
   if (!post) notFound()
 
-  const url = `https://whatsthecharge.com/blog/${post.slug}`
+  const url = `https://whatsthecharge.com/learn/${post.slug}`
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -91,10 +91,15 @@ export default async function BlogPostPage({
       />
 
       <header className="mb-8 mt-4">
-        <time className="text-xs uppercase tracking-wide text-muted-foreground">
-          {formatDate(post.published)}
-        </time>
-        <h1 className="mt-2 text-4xl font-bold tracking-tight">
+        <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
+          <span aria-hidden="true">{post.categoryIcon}</span>
+          <span>{post.category}</span>
+          <span className="text-muted-foreground/60">·</span>
+          <span className="font-medium tracking-normal normal-case text-muted-foreground">
+            {formatDate(post.published)} · {post.readMinutes} min read
+          </span>
+        </div>
+        <h1 className="text-4xl font-bold tracking-tight">
           {post.title}
         </h1>
         <p className="mt-3 text-lg text-muted-foreground">

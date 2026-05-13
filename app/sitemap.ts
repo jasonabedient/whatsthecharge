@@ -4,8 +4,8 @@ import { getAllBlogPosts } from '@/lib/blog'
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
-  const blogEntries: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
-    url: `https://whatsthecharge.com/blog/${post.slug}`,
+  const fieldNoteEntries: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
+    url: `https://whatsthecharge.com/learn/${post.slug}`,
     lastModified: post.updated ? new Date(post.updated) : now,
     changeFrequency: 'monthly',
     priority: 0.7,
@@ -19,11 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: 'https://whatsthecharge.com/blog',
+      url: 'https://whatsthecharge.com/learn',
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    ...blogEntries,
+    ...fieldNoteEntries,
   ]
 }
