@@ -90,7 +90,15 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <header className="mb-8 mt-4">
+      <Link
+        href="/learn"
+        className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <span aria-hidden="true">←</span>
+        <span>Back to Learn</span>
+      </Link>
+
+      <header className="mb-8">
         <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
           <span aria-hidden="true">{post.categoryIcon}</span>
           <span>{post.category}</span>
