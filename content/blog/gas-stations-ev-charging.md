@@ -6,8 +6,8 @@ keywords: gas stations EV charging, Shell Recharge, Love's EV charging, travel s
 published: 2026-05-12
 updated: 2026-05-12
 author: Jason at What's The Charge
-category: CHARGING BASICS
-categoryIcon: ⛽
+category: ROAD TRIPS
+categoryIcon: 🛣️
 ---
 
 EV charging is changing what a "refuel stop" looks like. For decades, gas stations and travel stops optimized one thing: helping drivers get back on the road quickly. Now, as more drivers go electric, many of these same locations are becoming some of the most logical places to charge — not just because they're easy to find off major routes, but because they already offer what charging naturally requires: **time and amenities**.
