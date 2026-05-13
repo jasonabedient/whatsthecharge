@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, Moon, Sun, X } from "lucide-react"
+import { Menu, Moon, Sun, X, Zap } from "lucide-react"
 import { useTheme } from "next-themes"
 
 const NAV_LINKS = [
@@ -52,9 +52,13 @@ export function SiteHeader() {
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
           <Link
             href="/"
-            className="text-sm font-semibold tracking-tight text-foreground hover:text-foreground/80"
+            className="group inline-flex items-center gap-1.5 text-sm font-semibold tracking-tight text-foreground hover:text-foreground/80"
           >
-            What's The Charge
+            <Zap
+              aria-hidden="true"
+              className="h-4 w-4 fill-cyan-400 text-cyan-400 transition-transform group-hover:scale-110"
+            />
+            <span>What's The Charge</span>
           </Link>
 
           <nav className="flex items-center gap-1 text-sm">
@@ -120,9 +124,13 @@ export function SiteHeader() {
               <Link
                 href="/"
                 onClick={() => setOpen(false)}
-                className="text-sm font-semibold tracking-tight text-foreground"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold tracking-tight text-foreground"
               >
-                What's The Charge
+                <Zap
+                  aria-hidden="true"
+                  className="h-4 w-4 fill-cyan-400 text-cyan-400"
+                />
+                <span>What's The Charge</span>
               </Link>
               <button
                 type="button"
