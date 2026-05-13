@@ -1,4 +1,4 @@
-// EV Battery Data — auto-generated from Notion (447 entries)
+// EV Battery Data — auto-generated from Notion (619 entries)
 // Source: https://www.notion.so/645929b6e97442d4930f8a929cf34350
 // Structure: year -> make -> model -> trim -> capacity (kWh)
 export const evData: Record<string, Record<string, Record<string, Record<string, number>>>> = {
@@ -315,39 +315,170 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
     },
   },
   "2025": {
+    "Acura": {
+      "ZDX": {
+        "A-Spec RWD": 102,
+        "A-Spec AWD": 102,
+        "Type S AWD": 102,
+      },
+    },
+    "Audi": {
+      "Q4 e-tron": {
+        "50 quattro": 82,
+        "55 quattro": 82,
+      },
+      "Q6 e-tron": {
+        "Performance": 100,
+        "quattro": 100,
+      },
+      "Q8 e-tron": {
+        "50 quattro": 95,
+        "55 quattro": 114,
+      },
+      "RS e-tron GT": {
+        "Performance": 105,
+      },
+      "SQ6 e-tron": {
+        "quattro": 100,
+      },
+      "SQ8 e-tron": {
+        "quattro": 114,
+      },
+      "e-tron GT": {
+        "S": 105,
+      },
+    },
     "BMW": {
       "i4": {
         "eDrive40": 80,
+        "eDrive35": 70.2,
+        "xDrive40": 83.9,
+        "M50 xDrive": 83.9,
+      },
+      "i5": {
+        "eDrive40": 84.3,
+        "xDrive40": 84.3,
+        "M60 xDrive": 84.3,
+      },
+      "i7": {
+        "xDrive60": 105.7,
+        "M70 xDrive": 105.7,
+      },
+      "iX": {
+        "xDrive50": 111.5,
+        "M60": 111.5,
       },
     },
     "Cadillac": {
+      "ESCALADE IQ": {
+        "Sport": 205,
+      },
       "Escalade IQ": {
         "Luxury": 200,
+      },
+      "LYRIQ": {
+        "Tech RWD": 102,
+        "Luxury RWD": 102,
+        "Luxury AWD": 102,
+        "Sport AWD": 102,
       },
       "Optiq": {
         "Luxury 1 AWD": 85,
       },
     },
     "Chevrolet": {
+      "Blazer EV": {
+        "LT AWD": 85,
+        "RS RWD": 102,
+        "RS AWD": 102,
+        "SS AWD": 102,
+      },
       "Equinox EV": {
         "RS AWD": 85,
+        "1LT FWD": 85,
+        "2LT FWD": 85,
+        "2LT AWD": 85,
+        "3LT FWD": 85,
+        "3LT AWD": 85,
+      },
+      "Silverado EV": {
+        "WT": 205,
+        "RST": 205,
       },
     },
     "Ford": {
       "F-150 Lightning": {
         "Extended Range": 131,
         "Standard Range": 98,
+        "Pro Standard Range": 98,
+        "XLT Standard Range": 98,
+        "Flash Extended Range": 131,
+        "Lariat Extended Range": 131,
+        "Platinum": 131,
       },
       "Mustang Mach-E": {
         "Extended Range": 91,
+        "Select RWD": 72,
+        "Select AWD": 72,
+        "Premium RWD Extended Range": 91,
+        "Premium AWD Extended Range": 91,
+        "GT": 91,
+        "Rally": 91,
+      },
+    },
+    "GMC": {
+      "Hummer EV Pickup": {
+        "2X": 205,
+        "3X": 205,
+      },
+      "Hummer EV SUV": {
+        "2X": 205,
+        "3X": 205,
+      },
+      "Sierra EV": {
+        "Denali Edition 1": 205,
+      },
+    },
+    "Genesis": {
+      "Electrified G80": {
+        "AWD": 87.2,
+      },
+      "Electrified GV70": {
+        "AWD": 77.4,
+      },
+      "GV60": {
+        "Standard": 77.4,
+        "Advanced": 77.4,
+        "Performance": 77.4,
       },
     },
     "Honda": {
       "Prologue": {
         "Elite AWD": 85,
+        "EX FWD": 85,
+        "EX AWD": 85,
+        "Touring FWD": 85,
+        "Touring AWD": 85,
       },
     },
     "Hyundai": {
+      "IONIQ 5": {
+        "SE Standard Range RWD": 63,
+        "SE RWD": 84,
+        "SEL RWD": 84,
+        "SEL AWD": 84,
+        "Limited AWD": 84,
+        "XRT AWD": 84,
+      },
+      "IONIQ 5 N": {
+        "AWD": 84,
+      },
+      "IONIQ 6": {
+        "SE Standard Range RWD": 53,
+        "SE RWD": 77.4,
+        "SEL RWD": 77.4,
+        "Limited AWD": 77.4,
+      },
       "Ioniq 5": {
         "SE Long Range RWD": 74,
       },
@@ -360,53 +491,206 @@ export const evData: Record<string, Record<string, Record<string, Record<string,
       "Ioniq 9": {
         "Limited AWD": 110.3,
       },
+      "Kona Electric": {
+        "SE": 48.6,
+        "SEL": 64.8,
+        "Limited": 64.8,
+      },
     },
     "Kia": {
+      "EV6": {
+        "Light RWD": 63,
+        "Wind RWD": 84,
+        "Wind AWD": 84,
+        "GT-Line RWD": 84,
+        "GT-Line AWD": 84,
+        "GT AWD": 84,
+      },
       "EV9": {
         "Land AWD": 99.8,
+        "Light RWD": 76.1,
+        "Light Long Range RWD": 99.8,
+        "Wind AWD": 99.8,
+        "GT-Line AWD": 99.8,
       },
     },
     "Lucid": {
+      "Air": {
+        "Pure RWD": 88,
+        "Touring AWD": 92,
+        "Grand Touring AWD": 118,
+        "Sapphire AWD": 118,
+      },
       "Gravity": {
         "Grand Touring": 123,
+        "Touring": 118,
       },
     },
     "Mercedes-Benz": {
+      "EQB": {
+        "250+": 70.5,
+        "300 4MATIC": 70.5,
+        "350 4MATIC": 70.5,
+      },
+      "EQE SUV": {
+        "350+": 96,
+        "350 4MATIC": 96,
+        "500 4MATIC": 96,
+      },
+      "EQE Sedan": {
+        "350+": 96,
+        "350 4MATIC": 96,
+        "500 4MATIC": 96,
+        "AMG": 96,
+      },
+      "EQS SUV": {
+        "450+": 118,
+        "450 4MATIC": 118,
+        "580 4MATIC": 118,
+      },
+      "EQS Sedan": {
+        "450+": 118,
+        "450 4MATIC": 118,
+        "580 4MATIC": 118,
+        "AMG": 118,
+      },
+      "G 580 with EQ Technology": {
+        "4MATIC": 116,
+      },
       "G-Class EV": {
         "G 580 with EQ Technology": 116,
+      },
+    },
+    "Nissan": {
+      "Ariya": {
+        "Engage FWD": 66,
+        "Engage+ FWD": 91,
+        "Venture+ FWD": 91,
+        "Evolve+ e-4ORCE": 91,
+        "Platinum+ e-4ORCE": 91,
+      },
+      "LEAF": {
+        "S": 40,
+        "SV Plus": 62,
       },
     },
     "Polestar": {
       "2": {
         "Long Range Dual Motor": 79,
+        "Long Range Single Motor": 82,
       },
       "3": {
         "Performance Pack": 111,
+        "Long Range Single Motor": 111,
+        "Long Range Dual Motor": 111,
+      },
+      "4": {
+        "Long Range Single Motor": 100,
+        "Long Range Dual Motor": 100,
+      },
+    },
+    "Porsche": {
+      "Macan Electric": {
+        "4": 100,
+        "4S": 100,
+        "Turbo": 100,
+      },
+      "Taycan": {
+        "RWD": 105,
+        "4S": 105,
+        "Turbo": 105,
+        "Turbo S": 105,
+        "Turbo GT": 105,
       },
     },
     "Rivian": {
       "R1S": {
         "Dual Motor (Large)": 135,
+        "Dual Standard": 92.5,
+        "Dual Large": 109,
+        "Dual Max": 141.5,
+        "Tri Max": 141.5,
+        "Quad Max": 141.5,
       },
       "R1T": {
         "Dual Motor (Large)": 135,
         "Dual Motor (Standard+)": 106,
+        "Dual Standard": 92.5,
+        "Dual Large": 109,
+        "Dual Max": 141.5,
+        "Tri Max": 141.5,
+        "Quad Max": 141.5,
+      },
+    },
+    "Subaru": {
+      "Solterra": {
+        "Premium": 71.4,
+        "Limited": 71.4,
+        "Touring": 71.4,
+      },
+    },
+    "Tesla": {
+      "Cybertruck": {
+        "Long Range RWD": 123,
+        "All-Wheel Drive": 123,
+        "Cyberbeast": 123,
+      },
+      "Model 3": {
+        "RWD (Highland)": 57.5,
+        "Long Range RWD (Highland)": 79,
+        "Long Range AWD (Highland)": 79,
+        "Performance AWD (Highland)": 79,
+      },
+      "Model S": {
+        "Long Range AWD": 100,
+        "Plaid AWD": 100,
+      },
+      "Model X": {
+        "Long Range AWD": 100,
+        "Plaid AWD": 100,
+      },
+      "Model Y": {
+        "Long Range RWD (Juniper)": 78.4,
+        "Long Range AWD (Juniper)": 78.4,
+        "Performance AWD (Juniper)": 78.4,
+      },
+    },
+    "Toyota": {
+      "bZ4X": {
+        "XLE FWD": 71.4,
+        "XLE AWD": 71.4,
+        "Limited FWD": 71.4,
+        "Limited AWD": 71.4,
       },
     },
     "Volkswagen": {
       "ID. Buzz": {
         "Pro S": 91,
+        "Pro S RWD": 91,
+        "Pro S Plus 1st Edition AWD": 91,
       },
       "ID.4": {
         "Pro (82 kWh class)": 77,
+        "Standard": 62,
+        "Pro RWD": 82,
+        "Pro AWD": 82,
+        "Pro S Plus AWD": 82,
       },
     },
     "Volvo": {
+      "C40 Recharge": {
+        "Twin Motor": 82,
+      },
       "EX30": {
         "Twin Motor Performance": 69,
       },
       "EX90": {
         "Twin Motor Performance Ultra": 111,
+        "Twin Motor": 111,
+        "Twin Motor Performance": 111,
+      },
+      "XC40 Recharge": {
+        "Twin Motor": 82,
       },
     },
   },
