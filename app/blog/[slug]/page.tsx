@@ -90,16 +90,7 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <nav className="mb-6 text-sm">
-        <Link
-          href="/blog"
-          className="text-muted-foreground hover:text-foreground"
-        >
-          ← All posts
-        </Link>
-      </nav>
-
-      <header className="mb-8">
+      <header className="mb-8 mt-4">
         <time className="text-xs uppercase tracking-wide text-muted-foreground">
           {formatDate(post.published)}
         </time>
