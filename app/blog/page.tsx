@@ -30,13 +30,7 @@ export default function BlogIndex() {
   const posts = getAllBlogPosts()
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <nav className="mb-8 text-sm">
-        <Link href="/" className="text-muted-foreground hover:text-foreground">
-          ← Back to calculator
-        </Link>
-      </nav>
-
+    <main className="mx-auto max-w-3xl px-6 py-12">
       <header className="mb-12">
         <h1 className="text-4xl font-bold tracking-tight">EV Charging Blog</h1>
         <p className="mt-3 text-lg text-muted-foreground">

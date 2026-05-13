@@ -90,7 +90,7 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <nav className="mb-8 text-sm">
+      <nav className="mb-6 text-sm">
         <Link
           href="/blog"
           className="text-muted-foreground hover:text-foreground"
@@ -124,7 +124,7 @@ export default async function BlogPostPage({
         </div>
       )}
 
-      <article className="prose prose-neutral max-w-none prose-headings:scroll-mt-24 prose-h2:mt-12 prose-h2:text-2xl prose-h3:text-xl prose-a:underline prose-table:text-sm">
+      <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-h2:mt-12 prose-h2:text-2xl prose-h3:text-xl prose-a:underline prose-table:text-sm">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>
