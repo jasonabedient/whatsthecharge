@@ -92,6 +92,13 @@ export function SiteHeader() {
               >
                 Learn
               </Link>
+              <Link
+                href="/about"
+                onClick={() => setOpen(false)}
+                className="rounded-md px-2 py-2 text-foreground transition-colors hover:bg-accent"
+              >
+                About
+              </Link>
             </nav>
 
             <div className="mt-auto border-t border-border pt-4">
