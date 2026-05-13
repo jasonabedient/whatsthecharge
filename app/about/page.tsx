@@ -26,18 +26,22 @@ export default function AboutPage() {
           Honest answers for real EV owners
         </h1>
         <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-          What's The Charge was built with one goal: give EV owners and shoppers
-          an accurate, no-BS picture of what it actually costs and how long it
-          actually takes to charge an electric vehicle.
+          Owning an EV is full of small details that nobody really explains up
+          front — how fast your home charger actually charges, why range per
+          hour matters more than kW, what a public session really costs, when
+          to plug in to save money. What's The Charge exists to make those
+          details easy to understand and easy to plan around.
         </p>
       </header>
 
       <div className="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:text-2xl prose-h3:text-xl prose-a:text-cyan-400 hover:prose-a:text-cyan-300 prose-a:no-underline hover:prose-a:underline">
         <p>
-          There's a lot of conflicting information out there. Some sources
-          understate costs to sell EVs. Others exaggerate them to scare people
-          away. This site cuts through the noise with real data, transparent
-          math, and numbers measured from actual cars in an actual garage.
+          EV charging has more nuance than most owners are told. Two cars on
+          the same charger can add range at very different speeds. A "Level 2"
+          charger can mean 5 kW or 11 kW. "Fast charging" can mean 50 kW or
+          350 kW, and the difference is an hour of your life. This site exists
+          to surface that nuance with real data, transparent math, and numbers
+          measured from actual cars in an actual garage.
         </p>
 
         <h2>What this site does</h2>
@@ -49,30 +53,10 @@ export default function AboutPage() {
           publishes guides backed by firsthand testing.
         </p>
 
-        <h2>Who's behind it</h2>
+        <h2>We're independent</h2>
         <p>
-          What's The Charge is built and maintained by Jason Bedient, founder of{' '}
-          <a
-            href="https://bedo.studio"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Bedo Studio
-          </a>{' '}
-          in the San Francisco Bay Area. Jason is a current Rivian owner,
-          previously drove a Hyundai Ioniq 6, and runs the{' '}
-          <a
-            href="https://www.youtube.com/@bedoadventure"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Bedo Adventure
-          </a>{' '}
-          YouTube channel covering EV road trips and real-world charging tests.
-        </p>
-        <p>
-          This is an independent project. It is not affiliated with any
-          automaker, charging network, or utility company.
+          What's The Charge is an independent project. It is not affiliated
+          with any automaker, charging network, or utility company.
         </p>
 
         <h2>Methodology & data sources</h2>
