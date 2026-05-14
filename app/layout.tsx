@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -71,6 +72,12 @@ export default function RootLayout({
             <>
               <Analytics />
               <SpeedInsights />
+              <Script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2178443822314130"
+                crossOrigin="anonymous"
+                strategy="afterInteractive"
+              />
             </>
           )}
         </ThemeProvider>
