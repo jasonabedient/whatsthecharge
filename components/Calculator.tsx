@@ -530,56 +530,72 @@ export function Calculator({
                   </p>
                 </div>
 
-                {/* Charging Range slider */}
+                {/* Charging Range slider with editable number inputs at each end */}
                 <div style={{ marginBottom: "1.5rem" }}>
+                  <Label style={labelStyle}>Charging Range</Label>
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "space-between",
                       alignItems: "center",
-                      marginBottom: "0.5rem",
+                      gap: "0.75rem",
                     }}
                   >
-                    <Label style={{ ...labelStyle, marginBottom: 0 }}>Charging Range</Label>
-                    <span
-                      style={{
-                        fontSize: "0.875rem",
-                        color: styles.textPrimary,
-                        fontWeight: 600,
-                        backgroundColor: styles.inputBg,
-                        border: styles.inputBorder,
-                        borderRadius: "0.5rem",
-                        padding: "0.15rem 0.65rem",
-                      }}
-                    >
-                      {chargingRange[0]} – {chargingRange[1]}%
-                    </span>
-                  </div>
-                  <div className="wtc-slider" style={{ padding: "0.5rem 0.25rem" }}>
-                    <Slider
+                    <Input
+                      type="number"
                       min={0}
                       max={100}
-                      step={1}
-                      value={chargingRange}
-                      onValueChange={(v) => {
-                        if (Array.isArray(v) && v.length === 2) {
-                          setChargingRange([v[0], v[1]] as [number, number])
-                          markInputsChanged()
-                        }
+                      value={chargingRange[0]}
+                      onChange={(e) => {
+                        const raw = parseInt(e.target.value, 10)
+                        if (Number.isNaN(raw)) return
+                        const next = Math.min(Math.max(raw, 0), chargingRange[1])
+                        setChargingRange([next, chargingRange[1]])
+                        markInputsChanged()
+                      }}
+                      aria-label="Starting battery percentage"
+                      style={{
+                        ...inputStyle,
+                        width: "4.5rem",
+                        textAlign: "center",
+                        flexShrink: 0,
+                        padding: "0.4rem 0.5rem",
                       }}
                     />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "0.7rem",
-                      color: styles.textSecondary,
-                      marginTop: "0.25rem",
-                    }}
-                  >
-                    <span>0</span>
-                    <span>100</span>
+                    <div className="wtc-slider" style={{ flex: 1, padding: "0.25rem 0" }}>
+                      <Slider
+                        min={0}
+                        max={100}
+                        step={1}
+                        value={chargingRange}
+                        onValueChange={(v) => {
+                          if (Array.isArray(v) && v.length === 2) {
+                            setChargingRange([v[0], v[1]] as [number, number])
+                            markInputsChanged()
+                          }
+                        }}
+                      />
+                    </div>
+                    <Input
+                      type="number"
+                      min={0}
+                      max={100}
+                      value={chargingRange[1]}
+                      onChange={(e) => {
+                        const raw = parseInt(e.target.value, 10)
+                        if (Number.isNaN(raw)) return
+                        const next = Math.max(Math.min(raw, 100), chargingRange[0])
+                        setChargingRange([chargingRange[0], next])
+                        markInputsChanged()
+                      }}
+                      aria-label="Target battery percentage"
+                      style={{
+                        ...inputStyle,
+                        width: "4.5rem",
+                        textAlign: "center",
+                        flexShrink: 0,
+                        padding: "0.4rem 0.5rem",
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -886,6 +902,15 @@ export function Calculator({
               .wtc-slider.wtc-slider [data-slot="slider-thumb"]:focus-visible {
                 outline: 2px solid #22d3ee !important;
                 outline-offset: 2px !important;
+              }
+              /* Hide the number-input spinner arrows for a cleaner look */
+              .wtc-two-col input[type="number"]::-webkit-outer-spin-button,
+              .wtc-two-col input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+              .wtc-two-col input[type="number"] {
+                -moz-appearance: textfield;
               }
             `}</style>
           </CardContent>
