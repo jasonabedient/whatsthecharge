@@ -555,7 +555,7 @@ export function Calculator({
                       {chargingRange[0]} – {chargingRange[1]}%
                     </span>
                   </div>
-                  <div style={{ padding: "0.5rem 0.25rem" }}>
+                  <div className="wtc-slider" style={{ padding: "0.5rem 0.25rem" }}>
                     <Slider
                       min={0}
                       max={100}
@@ -860,12 +860,27 @@ export function Calculator({
               </div>
             </div>
 
-            {/* Responsive: stack on narrow screens */}
+            {/* Responsive: stack on narrow screens + cyan slider */}
             <style>{`
               @media (max-width: 860px) {
                 .wtc-two-col {
                   grid-template-columns: minmax(0, 1fr) !important;
                 }
+              }
+              .wtc-slider [data-slot="slider-track"] {
+                background-color: rgba(34, 211, 238, 0.15) !important;
+              }
+              .wtc-slider [data-slot="slider-range"] {
+                background-color: #22d3ee !important;
+              }
+              .wtc-slider [data-slot="slider-thumb"] {
+                background-color: #22d3ee !important;
+                border-color: #22d3ee !important;
+                box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 0 12px rgba(34, 211, 238, 0.4) !important;
+              }
+              .wtc-slider [data-slot="slider-thumb"]:focus-visible {
+                outline: 2px solid #22d3ee !important;
+                outline-offset: 2px !important;
               }
             `}</style>
           </CardContent>
