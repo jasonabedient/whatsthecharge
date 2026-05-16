@@ -96,7 +96,6 @@ export function Calculator({
   const [stateCode, setStateCode] = useState<string>("CA")
   const [electricityRate, setElectricityRate] = useState<string>("0.320")
   const [rateOverridden, setRateOverridden] = useState<boolean>(false)
-  const [postCode, setPostCode] = useState<string>("")
   // Single-slider charging range (start–end pair)
   const [chargingRange, setChargingRange] = useState<[number, number]>([20, 80])
   const [email, setEmail] = useState<string>("")
@@ -190,7 +189,6 @@ export function Calculator({
           estCost: costNum,
           kwhNeeded: energyNum,
           hours: hoursNum,
-          postCode: postCode || null,
         }),
       })
     } catch (err) {
@@ -417,40 +415,6 @@ export function Calculator({
                   </Select>
                 </div>
 
-                {/* Battery Detected pill */}
-                {batteryCapacity && (
-                  <div
-                    style={{
-                      backgroundColor: "rgba(34, 211, 238, 0.1)",
-                      border: "1px solid rgba(34, 211, 238, 0.3)",
-                      borderRadius: "1rem",
-                      padding: "0.75rem 1rem",
-                      marginBottom: "1.25rem",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.75rem",
-                    }}
-                  >
-                    <Battery size={20} style={{ color: styles.cyan }} />
-                    <div>
-                      <p
-                        style={{
-                          fontSize: "0.7rem",
-                          color: styles.textSecondary,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.1em",
-                          marginBottom: "0.15rem",
-                        }}
-                      >
-                        Battery Detected (Usable)
-                      </p>
-                      <p style={{ fontSize: "1rem", fontWeight: 700, color: styles.cyan }}>
-                        {batteryCapacity} kWh
-                      </p>
-                    </div>
-                  </div>
-                )}
-
                 {/* Charger Power */}
                 <div style={{ marginBottom: "1.25rem" }}>
                   <Label style={labelStyle}>Charger Power</Label>
@@ -566,21 +530,6 @@ export function Calculator({
                   </p>
                 </div>
 
-                <div style={{ marginBottom: "1.5rem" }}>
-                  <Label style={labelStyle}>Post Code</Label>
-                  <Input
-                    type="text"
-                    inputMode="numeric"
-                    placeholder="Post Code"
-                    value={postCode}
-                    onChange={(e) => {
-                      setPostCode(e.target.value)
-                      markInputsChanged()
-                    }}
-                    style={inputStyle}
-                  />
-                </div>
-
                 {/* Charging Range slider */}
                 <div style={{ marginBottom: "1.5rem" }}>
                   <div
@@ -665,6 +614,40 @@ export function Calculator({
                 >
                   Charging Results!
                 </h3>
+
+                {/* Battery Detected pill (moved to right column) */}
+                {batteryCapacity && (
+                  <div
+                    style={{
+                      backgroundColor: "rgba(34, 211, 238, 0.1)",
+                      border: "1px solid rgba(34, 211, 238, 0.3)",
+                      borderRadius: "1rem",
+                      padding: "0.75rem 1rem",
+                      marginBottom: "1.25rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.75rem",
+                    }}
+                  >
+                    <Battery size={20} style={{ color: styles.cyan }} />
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "0.7rem",
+                          color: styles.textSecondary,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.1em",
+                          marginBottom: "0.15rem",
+                        }}
+                      >
+                        Battery Detected (Usable)
+                      </p>
+                      <p style={{ fontSize: "1rem", fontWeight: 700, color: styles.cyan }}>
+                        {batteryCapacity} kWh
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 <div
                   style={{
