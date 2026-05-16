@@ -98,6 +98,9 @@ export function Calculator({
   const [rateOverridden, setRateOverridden] = useState<boolean>(false)
   // Single-slider charging range (start–end pair)
   const [chargingRange, setChargingRange] = useState<[number, number]>([20, 80])
+  // Mirror string inputs so users can type freely (including clearing the field) before committing on blur/Enter
+  const [startInput, setStartInput] = useState<string>("20")
+  const [endInput, setEndInput] = useState<string>("80")
   const [email, setEmail] = useState<string>("")
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   const [showEmailPrompt, setShowEmailPrompt] = useState(false)
@@ -194,6 +197,37 @@ export function Calculator({
     } catch (err) {
       console.error("Lead submit failed", err)
     }
+  }
+
+  // Keep input mirrors in sync when the slider moves (drag, etc.)
+  useEffect(() => {
+    setStartInput(String(chargingRange[0]))
+    setEndInput(String(chargingRange[1]))
+  }, [chargingRange])
+
+  // Commit handlers: clamp on blur / Enter, fall back to current value if invalid
+  const commitStartInput = () => {
+    const raw = parseInt(startInput, 10)
+    if (Number.isNaN(raw)) {
+      setStartInput(String(chargingRange[0]))
+      return
+    }
+    const next = Math.max(0, Math.min(raw, chargingRange[1]))
+    setChargingRange([next, chargingRange[1]])
+    setStartInput(String(next))
+    markInputsChanged()
+  }
+
+  const commitEndInput = () => {
+    const raw = parseInt(endInput, 10)
+    if (Number.isNaN(raw)) {
+      setEndInput(String(chargingRange[1]))
+      return
+    }
+    const next = Math.min(100, Math.max(raw, chargingRange[0]))
+    setChargingRange([chargingRange[0], next])
+    setEndInput(String(next))
+    markInputsChanged()
   }
 
   const handleYearChange = (value: string) => {
@@ -544,13 +578,14 @@ export function Calculator({
                       type="number"
                       min={0}
                       max={100}
-                      value={chargingRange[0]}
-                      onChange={(e) => {
-                        const raw = parseInt(e.target.value, 10)
-                        if (Number.isNaN(raw)) return
-                        const next = Math.min(Math.max(raw, 0), chargingRange[1])
-                        setChargingRange([next, chargingRange[1]])
-                        markInputsChanged()
+                      value={startInput}
+                      onChange={(e) => setStartInput(e.target.value)}
+                      onBlur={() => commitStartInput()}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          commitStartInput()
+                          ;(e.target as HTMLInputElement).blur()
+                        }
                       }}
                       aria-label="Starting battery percentage"
                       style={{
@@ -579,13 +614,14 @@ export function Calculator({
                       type="number"
                       min={0}
                       max={100}
-                      value={chargingRange[1]}
-                      onChange={(e) => {
-                        const raw = parseInt(e.target.value, 10)
-                        if (Number.isNaN(raw)) return
-                        const next = Math.max(Math.min(raw, 100), chargingRange[0])
-                        setChargingRange([chargingRange[0], next])
-                        markInputsChanged()
+                      value={endInput}
+                      onChange={(e) => setEndInput(e.target.value)}
+                      onBlur={() => commitEndInput()}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          commitEndInput()
+                          ;(e.target as HTMLInputElement).blur()
+                        }
                       }}
                       aria-label="Target battery percentage"
                       style={{
