@@ -659,45 +659,42 @@ export function Calculator({
                   Charging Results!
                 </h3>
 
-                {/* Battery Detected pill (moved to right column) */}
-                {batteryCapacity && (
-                  <div
-                    style={{
-                      backgroundColor: "rgba(34, 211, 238, 0.1)",
-                      border: "1px solid rgba(34, 211, 238, 0.3)",
-                      borderRadius: "1rem",
-                      padding: "0.75rem 1rem",
-                      marginBottom: "1.25rem",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.75rem",
-                    }}
-                  >
-                    <Battery size={20} style={{ color: styles.cyan }} />
-                    <div>
-                      <p
-                        style={{
-                          fontSize: "0.7rem",
-                          color: styles.textSecondary,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.1em",
-                          marginBottom: "0.15rem",
-                        }}
-                      >
-                        Battery Detected (Usable)
-                      </p>
-                      <p style={{ fontSize: "1rem", fontWeight: 700, color: styles.cyan }}>
-                        {batteryCapacity} kWh
-                      </p>
-                    </div>
+                {/* Battery Detected pill (always visible; shows — until vehicle selected) */}
+                <div
+                  style={{
+                    backgroundColor: "rgba(34, 211, 238, 0.1)",
+                    border: "1px solid rgba(34, 211, 238, 0.3)",
+                    borderRadius: "1rem",
+                    padding: "0.75rem 1rem",
+                    marginBottom: "1.25rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <Battery size={20} style={{ color: styles.cyan }} />
+                  <div>
+                    <p
+                      style={{
+                        fontSize: "0.7rem",
+                        color: styles.textSecondary,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginBottom: "0.15rem",
+                      }}
+                    >
+                      Battery Detected (Usable)
+                    </p>
+                    <p style={{ fontSize: "1rem", fontWeight: 700, color: styles.cyan }}>
+                      {batteryCapacity ? `${batteryCapacity} kWh` : "— kWh"}
+                    </p>
                   </div>
-                )}
+                </div>
 
-                {/* Charging Estimate panel — matches live site */}
-                {currentResults && (
-                  <div
-                    style={{
-                      border: "1px solid rgba(34, 211, 238, 0.2)",
+                {/* Charging Estimate panel — always visible; zeros until calculated */}
+                <div
+                  style={{
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
                       borderRadius: "1rem",
                       padding: "1.25rem 1rem",
                       marginBottom: "1rem",
@@ -722,9 +719,9 @@ export function Calculator({
                       }}
                     >
                       {[
-                        { Icon: Zap, value: currentResults.energyNeeded, label: "kWh Needed" },
-                        { Icon: Clock, value: currentResults.chargingTime, label: "Hours" },
-                        { Icon: DollarSign, value: `$${currentResults.cost}`, label: "Est. Cost" },
+                        { Icon: Zap, value: currentResults ? currentResults.energyNeeded : "0.0", label: "kWh Needed" },
+                        { Icon: Clock, value: currentResults ? currentResults.chargingTime : "0.0", label: "Hours" },
+                        { Icon: DollarSign, value: currentResults ? `$${currentResults.cost}` : "$0.00", label: "Est. Cost" },
                       ].map((tile) => (
                         <div key={tile.label} style={{ textAlign: "center", minWidth: 0 }}>
                           <div
@@ -766,8 +763,7 @@ export function Calculator({
                         </div>
                       ))}
                     </div>
-                  </div>
-                )}
+                </div>
 
                 {/* Email gate */}
                 {showEmailPrompt && !emailSubmitted && (
