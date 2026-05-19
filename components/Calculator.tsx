@@ -28,13 +28,6 @@ const touModes = [
 // Charging efficiency
 const CHARGING_EFFICIENCY = 0.9
 
-// Result tile charger speeds (kW) — Level 1 / Level 2 / DC Fast
-const resultTiles = [
-  { label: "Level 1", power: 1.4, Icon: Zap },
-  { label: "Level 2", power: 11.5, Icon: Clock },
-  { label: "DC Fast", power: 150, Icon: DollarSign },
-]
-
 // Styling constants
 const styles = {
   background: "#09090b",
@@ -252,7 +245,6 @@ export function Calculator({
   // Result tiles: kWh needed is independent of charger speed,
   // so show the same kWh value across the three tiles (matches Figma — three "55.9 kWh needed" tiles).
   // We also include the per-charger time underneath each tile as helpful context.
-  const tileKwh = energyNeededKwh !== null ? energyNeededKwh.toFixed(1) : "—"
 
   return (
     <div
@@ -701,134 +693,78 @@ export function Calculator({
                   </div>
                 )}
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                    gap: "clamp(0.5rem, 2vw, 1rem)",
-                    marginBottom: "1.25rem",
-                  }}
-                >
-                  {resultTiles.map((tile) => {
-                    const hours = energyNeededKwh !== null ? (energyNeededKwh / tile.power).toFixed(1) : "—"
-                    return (
-                      <div
-                        key={tile.label}
-                        style={{
-                          backgroundColor: "rgba(255, 255, 255, 0.03)",
-                          border: styles.inputBorder,
-                          borderRadius: "1rem",
-                          padding: "1rem 0.75rem",
-                          textAlign: "center",
-                          minWidth: 0,
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            borderRadius: "10px",
-                            backgroundColor: "rgba(34, 211, 238, 0.1)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            margin: "0 auto 0.75rem",
-                          }}
-                        >
-                          <tile.Icon size={20} style={{ color: styles.cyan }} />
-                        </div>
-                        <p
-                          style={{
-                            fontSize: "clamp(1.125rem, 3vw, 1.5rem)",
-                            fontWeight: 700,
-                            color: styles.cyan,
-                            lineHeight: 1.1,
-                            marginBottom: "0.25rem",
-                          }}
-                        >
-                          {tileKwh}
-                        </p>
-                        <p
-                          style={{
-                            fontSize: "0.65rem",
-                            color: styles.textSecondary,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                            marginBottom: "0.5rem",
-                          }}
-                        >
-                          kWh Needed
-                        </p>
-                        <p
-                          style={{
-                            fontSize: "0.75rem",
-                            color: styles.textPrimary,
-                            fontWeight: 600,
-                          }}
-                        >
-                          {tile.label}
-                        </p>
-                        <p
-                          style={{
-                            fontSize: "0.7rem",
-                            color: styles.textSecondary,
-                            marginTop: "0.15rem",
-                          }}
-                        >
-                          ~{hours} hrs
-                        </p>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Cost summary (replaces nothing — adds useful info beside the tiles) */}
+                {/* Charging Estimate panel — matches live site */}
                 {currentResults && (
                   <div
                     style={{
-                      backgroundColor: "rgba(34, 211, 238, 0.05)",
                       border: "1px solid rgba(34, 211, 238, 0.2)",
                       borderRadius: "1rem",
-                      padding: "1rem 1.25rem",
+                      padding: "1.25rem 1rem",
                       marginBottom: "1rem",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "1rem",
-                      flexWrap: "wrap",
                     }}
                   >
-                    <div>
-                      <p
-                        style={{
-                          fontSize: "0.7rem",
-                          color: styles.textSecondary,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.1em",
-                          marginBottom: "0.2rem",
-                        }}
-                      >
-                        Estimated Cost
-                      </p>
-                      <p style={{ fontSize: "1.5rem", fontWeight: 700, color: styles.cyan }}>
-                        ${currentResults.cost}
-                      </p>
-                    </div>
-                    <div style={{ textAlign: "right" }}>
-                      <p
-                        style={{
-                          fontSize: "0.7rem",
-                          color: styles.textSecondary,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.1em",
-                          marginBottom: "0.2rem",
-                        }}
-                      >
-                        At {chargerPower} kW
-                      </p>
-                      <p style={{ fontSize: "1rem", fontWeight: 600, color: styles.textPrimary }}>
-                        ~{currentResults.chargingTime} hrs
-                      </p>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: styles.textSecondary,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      Charging Estimate
+                    </p>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                        gap: "clamp(0.5rem, 2vw, 1.5rem)",
+                      }}
+                    >
+                      {[
+                        { Icon: Zap, value: currentResults.energyNeeded, label: "kWh Needed" },
+                        { Icon: Clock, value: currentResults.chargingTime, label: "Hours" },
+                        { Icon: DollarSign, value: `$${currentResults.cost}`, label: "Est. Cost" },
+                      ].map((tile) => (
+                        <div key={tile.label} style={{ textAlign: "center", minWidth: 0 }}>
+                          <div
+                            style={{
+                              width: "48px",
+                              height: "48px",
+                              borderRadius: "12px",
+                              backgroundColor: "rgba(34, 211, 238, 0.1)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              margin: "0 auto 0.75rem",
+                            }}
+                          >
+                            <tile.Icon size={24} style={{ color: styles.cyan }} />
+                          </div>
+                          <p
+                            style={{
+                              fontSize: "clamp(1.25rem, 5vw, 1.75rem)",
+                              fontWeight: 700,
+                              color: styles.cyan,
+                              marginBottom: "0.25rem",
+                              wordBreak: "break-word",
+                              lineHeight: 1.1,
+                            }}
+                          >
+                            {tile.value}
+                          </p>
+                          <p
+                            style={{
+                              fontSize: "0.75rem",
+                              color: styles.textSecondary,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.05em",
+                            }}
+                          >
+                            {tile.label}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
