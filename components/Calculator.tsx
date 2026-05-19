@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, FormEvent, useEffect } from "react"
-import { Zap, Mail, Battery, Plug } from "lucide-react"
+import { Zap, Clock, DollarSign, Mail, Battery, Plug } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
@@ -30,9 +30,9 @@ const CHARGING_EFFICIENCY = 0.9
 
 // Result tile charger speeds (kW) — Level 1 / Level 2 / DC Fast
 const resultTiles = [
-  { label: "Level 1", power: 1.4 },
-  { label: "Level 2", power: 11.5 },
-  { label: "DC Fast", power: 150 },
+  { label: "Level 1", power: 1.4, Icon: Zap },
+  { label: "Level 2", power: 11.5, Icon: Clock },
+  { label: "DC Fast", power: 150, Icon: DollarSign },
 ]
 
 // Styling constants
@@ -735,7 +735,7 @@ export function Calculator({
                             margin: "0 auto 0.75rem",
                           }}
                         >
-                          <Zap size={20} style={{ color: styles.cyan }} />
+                          <tile.Icon size={20} style={{ color: styles.cyan }} />
                         </div>
                         <p
                           style={{
