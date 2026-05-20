@@ -39,12 +39,12 @@ function useCalcStyles() {
   const styles = {
     background: isDark ? "#09090b" : "#ffffff",
     cardBg: isDark ? "rgba(255, 255, 255, 0.02)" : "rgba(0, 0, 0, 0.02)",
-    cyan: "#1db3ca",
+    cyan: isDark ? "#22d3ee" : "#1db3ca",
     textPrimary: isDark ? "#fafafa" : "#09090b",
     textSecondary: isDark ? "#a1a1aa" : "#52525b",
     cardRadius: "1.875rem",
     inputBg: isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.03)",
-    inputBorder: "1px solid rgba(29, 179, 202, 0.2)",
+    inputBorder: "1px solid rgba(34, 211, 238, 0.2)",
     inputRadius: "0.75rem",
   }
 
@@ -275,7 +275,7 @@ export function Calculator({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderBottom: "1px solid rgba(29, 179, 202, 0.1)",
+          borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", minWidth: 0 }}>
@@ -337,15 +337,15 @@ export function Calculator({
         <Card
           style={{
             backgroundColor: styles.cardBg,
-            border: "1px solid rgba(29, 179, 202, 0.2)",
+            border: "1px solid rgba(34, 211, 238, 0.2)",
             borderRadius: styles.cardRadius,
-            boxShadow: "0 0 60px rgba(29, 179, 202, 0.08)",
+            boxShadow: "0 0 60px rgba(34, 211, 238, 0.08)",
             overflow: "hidden",
           }}
         >
           <CardHeader
             style={{
-              borderBottom: "1px solid rgba(29, 179, 202, 0.1)",
+              borderBottom: "1px solid rgba(34, 211, 238, 0.1)",
               padding: "0.625rem clamp(0.875rem, 3vw, 2rem)",
             }}
           >
@@ -647,7 +647,7 @@ export function Calculator({
                   disabled={isButtonDisabled}
                   style={{
                     width: "100%",
-                    backgroundColor: !isButtonDisabled ? styles.cyan : "rgba(29, 179, 202, 0.3)",
+                    backgroundColor: !isButtonDisabled ? styles.cyan : "rgba(34, 211, 238, 0.3)",
                     color: styles.background,
                     borderRadius: styles.inputRadius,
                     fontWeight: 600,
@@ -676,8 +676,8 @@ export function Calculator({
                 {/* Battery Detected pill (always visible; shows — until vehicle selected) */}
                 <div
                   style={{
-                    backgroundColor: "rgba(29, 179, 202, 0.1)",
-                    border: "1px solid rgba(29, 179, 202, 0.3)",
+                    backgroundColor: "rgba(34, 211, 238, 0.1)",
+                    border: "1px solid rgba(34, 211, 238, 0.3)",
                     borderRadius: "1rem",
                     padding: "0.75rem 1rem",
                     marginBottom: "1.25rem",
@@ -708,7 +708,7 @@ export function Calculator({
                 {/* Charging Estimate panel — always visible; zeros until calculated */}
                 <div
                   style={{
-                    border: "1px solid rgba(29, 179, 202, 0.2)",
+                    border: "1px solid rgba(34, 211, 238, 0.2)",
                       borderRadius: "1rem",
                       padding: "1.25rem 1rem",
                       marginBottom: "1rem",
@@ -743,7 +743,7 @@ export function Calculator({
                               width: "48px",
                               height: "48px",
                               borderRadius: "12px",
-                              backgroundColor: "rgba(29, 179, 202, 0.1)",
+                              backgroundColor: "rgba(34, 211, 238, 0.1)",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
@@ -783,8 +783,8 @@ export function Calculator({
                 {showEmailPrompt && !emailSubmitted && (
                   <div
                     style={{
-                      backgroundColor: "rgba(29, 179, 202, 0.05)",
-                      border: "1px solid rgba(29, 179, 202, 0.2)",
+                      backgroundColor: "rgba(34, 211, 238, 0.05)",
+                      border: "1px solid rgba(34, 211, 238, 0.2)",
                       borderRadius: "1rem",
                       padding: "1.25rem",
                       textAlign: "center",
@@ -842,8 +842,8 @@ export function Calculator({
                 {emailSubmitted && (
                   <div
                     style={{
-                      backgroundColor: "rgba(29, 179, 202, 0.1)",
-                      border: "1px solid rgba(29, 179, 202, 0.3)",
+                      backgroundColor: "rgba(34, 211, 238, 0.1)",
+                      border: "1px solid rgba(34, 211, 238, 0.3)",
                       borderRadius: "1rem",
                       padding: "0.85rem 1rem",
                       textAlign: "center",
@@ -868,21 +868,21 @@ export function Calculator({
               /* Use high specificity (double class) so we beat the Tailwind utility classes on the slider primitives. */
               .wtc-slider.wtc-slider [data-slot="slider-track"],
               .wtc-slider.wtc-slider .bg-muted {
-                background-color: rgba(29, 179, 202, 0.15) !important;
+                background-color: rgba(34, 211, 238, 0.15) !important;
               }
               .wtc-slider.wtc-slider [data-slot="slider-range"],
               .wtc-slider.wtc-slider [data-slot="slider-range"].bg-primary {
-                background-color: #1db3ca !important;
+                background-color: #22d3ee !important;
               }
               .wtc-slider.wtc-slider [data-slot="slider-thumb"],
               .wtc-slider.wtc-slider [data-slot="slider-thumb"].bg-white,
               .wtc-slider.wtc-slider [data-slot="slider-thumb"].border-primary {
-                background-color: #1db3ca !important;
-                border-color: #1db3ca !important;
-                box-shadow: 0 0 0 1px rgba(29, 179, 202, 0.4), 0 0 12px rgba(29, 179, 202, 0.4) !important;
+                background-color: #22d3ee !important;
+                border-color: #22d3ee !important;
+                box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4), 0 0 12px rgba(34, 211, 238, 0.4) !important;
               }
               .wtc-slider.wtc-slider [data-slot="slider-thumb"]:focus-visible {
-                outline: 2px solid #1db3ca !important;
+                outline: 2px solid #22d3ee !important;
                 outline-offset: 2px !important;
               }
               /* Hide the number-input spinner arrows for a cleaner look */
@@ -904,7 +904,7 @@ export function Calculator({
         style={{
           textAlign: "center",
           padding: "2rem",
-          borderTop: "1px solid rgba(29, 179, 202, 0.1)",
+          borderTop: "1px solid rgba(34, 211, 238, 0.1)",
           color: styles.textSecondary,
           fontSize: "0.875rem",
         }}
