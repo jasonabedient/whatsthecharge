@@ -56,7 +56,7 @@ export function SiteHeader() {
           >
             <Zap
               aria-hidden="true"
-              className="h-4 w-4 fill-cyan-500 text-cyan-500 transition-transform group-hover:scale-110"
+              className="h-4 w-4 fill-cyan-500 dark:fill-cyan-400 text-cyan-500 dark:text-cyan-400 transition-transform group-hover:scale-110"
             />
             <span>What's The Charge</span>
           </Link>
@@ -128,7 +128,7 @@ export function SiteHeader() {
               >
                 <Zap
                   aria-hidden="true"
-                  className="h-4 w-4 fill-cyan-500 text-cyan-500"
+                  className="h-4 w-4 fill-cyan-500 dark:fill-cyan-400 text-cyan-500 dark:text-cyan-400"
                 />
                 <span>What's The Charge</span>
               </Link>
