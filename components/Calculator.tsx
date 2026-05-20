@@ -2,6 +2,7 @@
 
 import { useState, FormEvent, useEffect } from "react"
 import { Zap, Clock, DollarSign, Mail, Battery, Plug } from "lucide-react"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
@@ -28,34 +29,46 @@ const touModes = [
 // Charging efficiency
 const CHARGING_EFFICIENCY = 0.9
 
-// Styling constants
-const styles = {
-  background: "#09090b",
-  cyan: "#22d3ee",
-  textPrimary: "#fafafa",
-  textSecondary: "#a1a1aa",
-  cardRadius: "1.875rem",
-  inputBg: "rgba(255, 255, 255, 0.05)",
-  inputBorder: "1px solid rgba(34, 211, 238, 0.2)",
-  inputRadius: "0.75rem",
+// Theme-aware styling helper
+function useCalcStyles() {
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const isDark = !mounted || resolvedTheme === "dark"
+
+  const styles = {
+    background: isDark ? "#09090b" : "#ffffff",
+    cardBg: isDark ? "rgba(255, 255, 255, 0.02)" : "rgba(0, 0, 0, 0.02)",
+    cyan: "#22d3ee",
+    textPrimary: isDark ? "#fafafa" : "#09090b",
+    textSecondary: isDark ? "#a1a1aa" : "#52525b",
+    cardRadius: "1.875rem",
+    inputBg: isDark ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.03)",
+    inputBorder: "1px solid rgba(34, 211, 238, 0.2)",
+    inputRadius: "0.75rem",
+  }
+
+  const labelStyle: React.CSSProperties = {
+    color: styles.textSecondary,
+    fontSize: "0.75rem",
+    fontWeight: 600,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    marginBottom: "0.5rem",
+    display: "block",
+  }
+
+  const inputStyle: React.CSSProperties = {
+    backgroundColor: styles.inputBg,
+    border: styles.inputBorder,
+    borderRadius: styles.inputRadius,
+    color: styles.textPrimary,
+  }
+
+  return { styles, labelStyle, inputStyle, isDark }
 }
 
-const labelStyle: React.CSSProperties = {
-  color: styles.textSecondary,
-  fontSize: "0.75rem",
-  fontWeight: 600,
-  letterSpacing: "0.1em",
-  textTransform: "uppercase",
-  marginBottom: "0.5rem",
-  display: "block",
-}
 
-const inputStyle: React.CSSProperties = {
-  backgroundColor: styles.inputBg,
-  border: styles.inputBorder,
-  borderRadius: styles.inputRadius,
-  color: styles.textPrimary,
-}
 
 export interface CalculatorProps {
   initialYear?: string
@@ -70,6 +83,7 @@ export function Calculator({
   initialModel = "",
   initialTrim = "",
 }: CalculatorProps) {
+  const { styles, labelStyle, inputStyle } = useCalcStyles()
   const [year, setYear] = useState<string>(initialYear)
   const [make, setMake] = useState<string>(initialMake)
   const [model, setModel] = useState<string>(initialModel)
@@ -322,7 +336,7 @@ export function Calculator({
       >
         <Card
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.02)",
+            backgroundColor: styles.cardBg,
             border: "1px solid rgba(34, 211, 238, 0.2)",
             borderRadius: styles.cardRadius,
             boxShadow: "0 0 60px rgba(34, 211, 238, 0.08)",
