@@ -30,7 +30,7 @@ export default function LearnIndex() {
   return (
     <main className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
       <header className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-500 dark:text-cyan-400">
           Learn
         </p>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -52,9 +52,9 @@ export default function LearnIndex() {
             <li key={post.slug}>
               <Link
                 href={`/learn/${post.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-border bg-card/40 p-6 transition-colors hover:border-cyan-400/50 hover:bg-card/70"
+                className="group flex h-full flex-col rounded-2xl border border-border bg-card/40 p-6 transition-colors hover:border-cyan-500/50 dark:hover:border-cyan-400/50 hover:bg-card/70"
               >
-                <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
+                <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-500 dark:text-cyan-400">
                   <span aria-hidden="true">{post.categoryIcon}</span>
                   <span>{post.category}</span>
                 </div>
