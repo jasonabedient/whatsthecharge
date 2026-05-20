@@ -19,7 +19,7 @@ export default function AboutPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
       <header className="mb-12 sm:mb-16">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-500">
           About
         </p>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -34,7 +34,7 @@ export default function AboutPage() {
         </p>
       </header>
 
-      <div className="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:text-2xl prose-h3:text-xl prose-a:text-cyan-400 hover:prose-a:text-cyan-300 prose-a:no-underline hover:prose-a:underline">
+      <div className="prose prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-h2:mt-12 prose-h2:text-2xl prose-h3:text-xl prose-a:text-cyan-500 hover:prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline">
         <p>
           EV charging has more nuance than most owners are told. Two cars on
           the same charger can add range at very different speeds. A "Level 2"
