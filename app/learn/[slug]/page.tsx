@@ -99,7 +99,7 @@ export default async function BlogPostPage({
       </Link>
 
       <header className="mb-8">
-        <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
+        <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-500">
           <span aria-hidden="true">{post.categoryIcon}</span>
           <span>{post.category}</span>
           <span className="text-muted-foreground/60">·</span>
